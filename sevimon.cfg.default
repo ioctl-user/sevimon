@@ -1,0 +1,25 @@
+[common]
+
+# Camera settings
+camera_dev = 0
+img_w = 640
+img_h = 480
+fps = 1
+
+# Display captured image with detected face
+showcap = True
+
+# Write statistics to file for further analisys
+writestat = True
+
+# Warning window settings
+wsize = 96
+wx = 300
+wy = 150
+wcolor = (0, 255, 0) # In BGR format
+
+# Minimum and maximum emotion score limits to show warning
+# See lib/i18n.py file for related emotions
+showwarn = True
+wmax = [ 4.0, None, None, None, None, None, None,  1.5]
+wmin = [None, None, None, None, None, None, None, None]
