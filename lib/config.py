@@ -3,10 +3,10 @@ import platformdirs
 import ast
 import os
 
-appname = "sevimon"
+APPNAME = "sevimon"
 
 config = configparser.ConfigParser()
-config.read(platformdirs.user_config_dir(appname) + '/sevimon.cfg')
+config.read(platformdirs.user_config_dir(APPNAME) + '/sevimon.cfg')
 try:
     cfg = config["common"]
     writecfg = False
@@ -36,9 +36,9 @@ WMAX = ast.literal_eval(cfg.get("wmax", "[ 4.0, None, None, None, None, None, No
 WMIN = ast.literal_eval(cfg.get("wmin", "[None, None, None, None, None, None, None, None]"))
 
 if writecfg:
-    if not os.path.exists(platformdirs.user_config_dir(appname)):
-        os.makedirs(platformdirs.user_config_dir(appname))
-    with open(platformdirs.user_config_dir(appname) + '/sevimon.cfg', 'w') as configfile:
+    if not os.path.exists(platformdirs.user_config_dir(APPNAME)):
+        os.makedirs(platformdirs.user_config_dir(APPNAME))
+    with open(platformdirs.user_config_dir(APPNAME) + '/sevimon.cfg', 'w') as configfile:
         config.set("common", "camera_dev", str(CAMERA_DEV))
         config.set("common", "img_w", str(IMG_W))
         config.set("common", "img_h", str(IMG_H))
