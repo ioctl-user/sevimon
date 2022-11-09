@@ -4,11 +4,12 @@
 
 from matplotlib import pyplot as plt
 import os
-from lib.i18n import *
+from lib.i18n import emotions
 import configparser
 import platformdirs
 
-appname = "sevimon"
+APPNAME = "sevimon"
+
 
 def main() -> None:
 
@@ -23,21 +24,21 @@ def main() -> None:
     sad = []
     surp = []
 
-    #pattlen=16 # Ugly hack: ignore seconds
-    pattlen=13 # Ugly hack: ignore minutes
+    #pattlen = 16 # Ugly hack: ignore seconds
+    pattlen = 13 # Ugly hack: ignore minutes
 
     # Read all files in the log dir
     dtold = None
     i = 0
     curx = 0
-    for file in sorted(os.listdir(platformdirs.user_log_dir(appname))):
+    for file in sorted(os.listdir(platformdirs.user_log_dir(APPNAME))):
         date = file
-        year,mon,day = file.split(".")
+        year, mon, day = file.split(".")
 
-        with open(platformdirs.user_log_dir(appname) + "/" + file, 'r') as f:
+        with open(platformdirs.user_log_dir(APPNAME) + "/" + file, 'r') as f:
             for line in f:
-                time,_ang,_cont,_disq,_fear,_happ,_neutr,_sad,_surp = line.split()
-                hour,mn,sec = time.split(":")
+                time, _ang, _cont, _disq, _fear, _happ, _neutr, _sad, _surp = line.split()
+                hour, mn, sec = time.split(":")
                 dt = date + " " + time
                 dt = dt[:pattlen]
                 if dt == dtold:
@@ -107,9 +108,9 @@ def main() -> None:
 
     plt.xticks(x, dtime,  rotation=80)
 
-    plt.margins(x=0,y=0)
+    plt.margins(x=0, y=0)
     plt.legend()
-    plt.subplots_adjust(bottom = 0.2, top = 0.98, left = 0.03, right = 0.97)
+    plt.subplots_adjust(bottom=0.2, top=0.98, left=.03, right=0.97)
     plt.show()
 
 
