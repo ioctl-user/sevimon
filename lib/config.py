@@ -7,13 +7,11 @@ APPNAME = "sevimon"
 
 config = configparser.ConfigParser()
 config.read(platformdirs.user_config_dir(APPNAME) + '/sevimon.cfg')
-try:
-    cfg = config["common"]
-    writecfg = False
-except:
+
+writecfg = 'common' not in config
+if writecfg:
     config.add_section("common")
-    cfg = config["common"]
-    writecfg = True
+cfg = config["common"]
 
 
 CAMERA_DEV = cfg.getint("camera_dev", 0)
