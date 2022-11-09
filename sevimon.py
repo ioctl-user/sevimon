@@ -75,13 +75,13 @@ def showwarn(i, scores) -> None:
                 cv2.putText(wimg, "!", (textx, texty), font, 1, (0, 0, 0), linew)
                 cv2.namedWindow(wname, cv2.WINDOW_NORMAL | cv2.WINDOW_FREERATIO | cv2.WINDOW_GUI_NORMAL)
                 cv2.resizeWindow(wname, WSIZE, WSIZE)
-                cv2.moveWindow(wname, WX, WY) 
+                cv2.moveWindow(wname, WX, WY)
                 cv2.imshow(wname, wimg)
         else:
             if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) > 0:
                 cv2.destroyWindow(wname)
-    except:
-        pass
+    except Exception as e:
+        print(f'Warning!\n{e}')
 
 
 def main() -> None:
