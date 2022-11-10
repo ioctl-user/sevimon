@@ -11,7 +11,7 @@ import platformdirs
 from lib.centerface import CenterFace
 
 
-from hsemotion.facial_emotions import HSEmotionRecognizer
+from hsemotion_onnx.facial_emotions import HSEmotionRecognizer
 
 # from cfg import *
 from lib.i18n import emotions
@@ -86,6 +86,10 @@ def showwarn(i, scores) -> None:
 
 def main() -> None:
     cap = cv2.VideoCapture(CAMERA_DEV)
+    if not cap.isOpened():
+        print ("Couldn't open camera {}".format(CAMERA_DEV))
+        exit
+
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, IMG_W)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, IMG_H)
     cap.set(cv2.CAP_PROP_FPS, FPS * 2)  # FPS, multiplication by 2 because of hack to clean buffer
@@ -107,8 +111,7 @@ def main() -> None:
 #        dt1 = datetime.now()
         bounding_boxes, points = centerface(image_bgr, IMG_H, IMG_W, threshold=0.35)
 #        dt2 = datetime.now()
-
-# XXX 4
+#        print(dt2 - dt1)
         bounding_boxes, _ = centerface(image_bgr, IMG_H, IMG_W, threshold=0.35)
 
         i = 0

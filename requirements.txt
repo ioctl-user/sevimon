@@ -1,6 +1,4 @@
-# Use torch 1.12, because 1.13 needs CUDA by default
-torch==1.12.1
-hsemotion @ git+https://github.com/HSE-asavchenko/face-emotion-recognition.git#egg=subdir&subdirectory=python-package
+hsemotion-onnx @ git+https://github.com/HSE-asavchenko/face-emotion-recognition.git#egg=subdir&subdirectory=python-package/hsemotion_onnx
 opencv-python
 configparser
 platformdirs
