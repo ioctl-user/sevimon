@@ -6,7 +6,9 @@ import os
 APPNAME = "sevimon"
 
 config = configparser.ConfigParser()
-config.read(platformdirs.user_config_dir(APPNAME) + '/sevimon.cfg')
+configname = platformdirs.user_config_dir(APPNAME) + '/sevimon.cfg'
+print("Try read the config file " + configname)
+config.read(configname)
 
 writecfg = 'common' not in config
 if writecfg:
@@ -36,6 +38,7 @@ WMIN = ast.literal_eval(cfg.get("wmin", "[None, None, None, None, None, None, No
 if writecfg:
     if not os.path.exists(platformdirs.user_config_dir(APPNAME)):
         os.makedirs(platformdirs.user_config_dir(APPNAME))
+    print("Write to the config file " + configname)
     with open(platformdirs.user_config_dir(APPNAME) + '/sevimon.cfg', 'w') as configfile:
         config.set("common", "camera_dev", str(CAMERA_DEV))
         config.set("common", "img_w", str(IMG_W))

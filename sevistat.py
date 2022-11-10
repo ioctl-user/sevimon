@@ -31,11 +31,13 @@ def main() -> None:
     dtold = None
     i = 0
     curx = 0
-    for file in sorted(os.listdir(platformdirs.user_log_dir(APPNAME))):
+    logdir = platformdirs.user_log_dir(APPNAME)
+    print("Scanning directory " + logdir + " for statistics")
+    for file in sorted(os.listdir(logdir)):
         date = file
         year, mon, day = file.split(".")
 
-        with open(platformdirs.user_log_dir(APPNAME) + "/" + file, 'r') as f:
+        with open(logdir + "/" + file, 'r') as f:
             for line in f:
                 time, _ang, _cont, _disq, _fear, _happ, _neutr, _sad, _surp = line.split()
                 hour, mn, sec = time.split(":")
