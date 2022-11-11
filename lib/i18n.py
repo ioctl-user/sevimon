@@ -1,10 +1,11 @@
 import locale
 
 _emotions = {
-    "C":           ("Anger ", "Contm.", "Disgu.", "Fear ", "Happs.",  "Neutr.", "Sadns.", "Surpr."),
-    "ru_RU.UTF-8": ("Злость", "Презр.", "Отврщ.", "Страх ", "Радст.", "Нейтр.", "Грусть", "Удивл."),
+    "en": ("Anger ", "Contm.", "Disgu.", "Fear  ", "Happs.", "Neutr.", "Sadns.", "Surpr."),
+    "ru": ("Злость", "Презр.", "Отврщ.", "Страх ", "Радст.", "Нейтр.", "Грусть", "Удивл."),
 }
 
 
-curr_locale = '.'.join(locale.getlocale())
-emotions = _emotions[curr_locale] if curr_locale in _emotions else _emotions["C"]
+# The locale.getdefaultlocale() is obsolete, so this code should be updated
+curr_lang = locale.getdefaultlocale()[0].split('_')[0]
+emotions = _emotions[curr_lang] if curr_lang in _emotions else _emotions["en"]
