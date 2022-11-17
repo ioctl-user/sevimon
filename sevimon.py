@@ -73,7 +73,7 @@ def showwarn(i, scores) -> None:
                 textx = int((wimg.shape[1] - textsize[0]) / 2)
                 texty = int((wimg.shape[0] + textsize[1]) / 2)
                 cv2.putText(wimg, "!", (textx, texty), font, 1, (0, 0, 0), linew)
-                cv2.namedWindow(wname, cv2.WINDOW_NORMAL | cv2.WINDOW_FREERATIO | cv2.WINDOW_GUI_NORMAL)
+                cv2.namedWindow(wname, cv2.WINDOW_NORMAL | cv2.WINDOW_FREERATIO | cv2.WINDOW_GUI_NORMAL | cv2.WND_PROP_TOPMOST)
                 cv2.resizeWindow(wname, WSIZE, WSIZE)
                 cv2.moveWindow(wname, WX, WY)
                 cv2.imshow(wname, wimg)

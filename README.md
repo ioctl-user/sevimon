@@ -24,7 +24,7 @@ Download the project, install the dependencies that are missing in the system:
 ```shell
 git clone https://github.com/ioctl-user/sevimon.git
 cd sevimon
-pip install -r  requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Use the command `sevimon.py` from the project folder to run it.
@@ -44,7 +44,7 @@ Enter the following commands to download the package and install the dependencie
 ```shell
 git clone https://github.com/ioctl-user/sevimon.git
 cd sevimon
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Use the command `python.exe -m sevimon.py` from the project folder to run it.

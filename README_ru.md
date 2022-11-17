@@ -24,7 +24,7 @@ Sevimon работает следующим образом: сначала на 
 ```shell
 git clone https://github.com/ioctl-user/sevimon.git
 cd sevimon
-pip install -r  requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Для запуска используйте команду `sevimon.py` из папки проекта.
@@ -44,7 +44,7 @@ pip install -r  requirements.txt
 ```shell
 git clone https://github.com/ioctl-user/sevimon.git
 cd sevimon
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Для запуска используйте команду `python.exe -m sevimon.py` из папки проекта.
