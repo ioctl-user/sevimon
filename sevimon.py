@@ -4,16 +4,14 @@
 
 import os
 import cv2
+import sys
 import numpy
 from datetime import datetime
 import platformdirs
-
-from lib.centerface import CenterFace
-
-
 from hsemotion_onnx.facial_emotions import HSEmotionRecognizer
 
-# from cfg import *
+sys.path.append(os.path.dirname(__file__))
+from lib.centerface import CenterFace
 from lib.i18n import emotions
 from lib.config import *
 

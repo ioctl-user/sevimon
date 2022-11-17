@@ -4,9 +4,13 @@
 
 from matplotlib import pyplot as plt
 import os
-from lib.i18n import emotions
+import sys
 import configparser
 import platformdirs
+
+sys.path.append(os.path.dirname(__file__))
+from lib.i18n import emotions
+
 
 APPNAME = "sevimon"
 
