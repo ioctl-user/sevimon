@@ -11,8 +11,9 @@ setup(
     packages=[
       "sevimon",
       "sevimon.lib",
+      "sevimon.lib.locale",
     ],
-    package_dir={'sevimon': '', 'sevimon.lib': 'lib',},
+    package_dir={'sevimon': '', 'sevimon.lib': 'lib', 'sevimon.lib.locale': 'lib/locale'},
     entry_points = {
         'console_scripts': [
             'sevimon=sevimon.sevimon:main',

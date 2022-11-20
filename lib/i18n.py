@@ -1,11 +1,12 @@
 import locale
-
-_emotions = {
-    "en": ("Anger ", "Contm.", "Disgu.", "Fear  ", "Happs.", "Neutr.", "Sadns.", "Surpr."),
-    "ru": ("Злость", "Презр.", "Отврщ.", "Страх ", "Радст.", "Нейтр.", "Грусть", "Удивл."),
-}
-
+from lib.locale.init import translation
+from lib.locale.ru import *
 
 # The locale.getdefaultlocale() is obsolete, so this code should be updated
 curr_lang = locale.getdefaultlocale()[0].split('_')[0]
-emotions = _emotions[curr_lang] if curr_lang in _emotions else _emotions["en"]
+
+def _(arg):
+    if curr_lang in translation:
+        if arg in translation[curr_lang]:
+            return translation[curr_lang][arg]
+    return arg

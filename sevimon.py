@@ -12,11 +12,12 @@ from hsemotion_onnx.facial_emotions import HSEmotionRecognizer
 
 sys.path.append(os.path.dirname(__file__))
 from lib.centerface import CenterFace
-from lib.i18n import emotions
+from lib.i18n import _
 from lib.config import *
 
 
 MODEL_NAME='enet_b0_8_best_afew'
+emotions = (_("Anger "), _("Contm."), _("Disgu."), _("Fear  "), _("Happs."), _("Neutr."), _("Sadns."), _("Surpr."))
 
 
 def writestat(i, scores) -> None:
