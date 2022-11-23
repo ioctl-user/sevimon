@@ -9,10 +9,10 @@ import configparser
 import platformdirs
 
 sys.path.append(os.path.dirname(__file__))
-from lib.i18n import emotions
+from lib.i18n import _
+from lib.config import *
 
-
-APPNAME = "sevimon"
+emotions = (_("Anger "), _("Contm."), _("Disgu."), _("Fear  "), _("Happs."), _("Neutr."), _("Sadns."), _("Surpr."))
 
 
 def main() -> None:

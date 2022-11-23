@@ -91,7 +91,7 @@ xhost -localhost
 
 ## Project file licence
 
-AGPLv3
+AGPL v3 or newer
 
 ## Acknowledgements
 
