@@ -16,6 +16,7 @@ setup(
     package_dir={'sevimon': '', 'sevimon.lib': 'lib', 'sevimon.lib.locale': 'lib/locale'},
     entry_points = {
         'console_scripts': [
+            'sevicfg=sevicfg.sevicfg:main',
             'sevimon=sevimon.sevimon:main',
             'sevistat=sevimon.sevistat:main',
         ],
