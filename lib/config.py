@@ -3,7 +3,12 @@ import platformdirs
 import ast
 import os
 
+from lib.i18n import _
+
+
 APPNAME = "sevimon"
+emotions = (_("Anger "), _("Contm."), _("Disgu."), _("Fear  "), _("Happs."), _("Neutr."), _("Sadns."), _("Surpr."))
+
 
 class configclass:
      def __init__(self,):
@@ -25,7 +30,7 @@ def readcfg() -> configclass:
     cfg.camera_dev = section.getint("camera_dev", 0)
     cfg.img_w = section.getint("img_w", 640)
     cfg.img_h = section.getint("img_h", 480)
-    cfg.fps = section.getint("fps", 1)
+    cfg.fps = section.getfloat("fps", 1)
 
     cfg.showcap = section.getboolean("showcap", True)
 

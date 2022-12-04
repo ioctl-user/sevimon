@@ -17,7 +17,6 @@ from lib.config import *
 
 
 MODEL_NAME='enet_b0_8_best_afew'
-emotions = (_("Anger "), _("Contm."), _("Disgu."), _("Fear  "), _("Happs."), _("Neutr."), _("Sadns."), _("Surpr."))
 cfg = readcfg()
 
 
@@ -140,3 +139,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# vi: tabstop=4 shiftwidth=4 expandtab
