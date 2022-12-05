@@ -199,7 +199,6 @@ class guiconfigurator:
     # Action on save button
     def save_guicfg(self) -> None:
         errorflag, newcfg = self.get_gui_cfg()
-        print(self.cfg)
 
         # Show warning if needed
         if errorflag == 0:

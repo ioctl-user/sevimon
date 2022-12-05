@@ -1,3 +1,5 @@
+# Licensed under AGPLv3+
+
 import configparser
 import platformdirs
 import ast
@@ -19,7 +21,7 @@ def readcfg() -> configclass:
 
     config = configparser.ConfigParser()
     configname = platformdirs.user_config_dir(APPNAME) + "/" + APPNAME + ".cfg"
-    print("Trying to read the config file " + configname)
+    print(("Trying to read the config file ") + configname)
     config.read(configname)
 
     needwritecfg = "common" not in config
@@ -74,5 +76,7 @@ def writecfg(cfg) -> None:
 
         if not os.path.exists(platformdirs.user_config_dir(APPNAME)):
             os.makedirs(platformdirs.user_config_dir(APPNAME))
-        print("Writing to the config file " + configname)
+        print(_("Writing to the config file ") + configname)
         config.write(configfile)
+
+# vi: tabstop=4 shiftwidth=4 expandtab
