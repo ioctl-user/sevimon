@@ -38,13 +38,18 @@ class guiconfigurator:
         guithread = threading.Thread(target=self.__create_window, args=())
         guithread.start()
 
+    def __close_window(self):
+        self.running = False
+
     # Main function of the class
     def __create_window(self):
 
         self.note = ""  # Notice message, be filled later
         self.savedentcolor = None  # Default entry background color
+        self.running = True
 
         root = Tk()
+        root.protocol("WM_DELETE_WINDOW", self.__close_window)
         nb = ttk.Notebook(root)
         nb.pack(fill='both', expand='yes')
 
@@ -189,7 +194,7 @@ class guiconfigurator:
 
         self.endis()  # Update enable/disable status of interface elementes
 
-        while True:
+        while self.running is True:
             root.update_idletasks()
             root.update()
             time.sleep(0.05)
