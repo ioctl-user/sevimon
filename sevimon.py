@@ -16,7 +16,7 @@ from lib.i18n import _
 from lib.config import *
 
 
-MODEL_NAME='enet_b0_8_best_afew'
+MODEL_NAME='enet_b0_8_best_vgaf'
 cfg = readcfg()
 
 
