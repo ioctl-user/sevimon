@@ -97,6 +97,7 @@ class guiconfigurator:
         self.showwarn = BooleanVar()
         Checkbutton(
                 misctab, text=_("Show warning"), variable=self.showwarn,
+                command=self.endis,
                 onvalue=1, offvalue=0).grid(row=row.inc(), column=0, sticky=W)
 
         Label(misctab, text=_("Warning window size")).grid(
@@ -142,7 +143,7 @@ class guiconfigurator:
             self.wmaxen[i] = BooleanVar()
             Checkbutton(
                     limtag, text=emotions[i], variable=self.wmaxen[i],
-                    onvalue=1, offvalue=0).grid(
+                    onvalue=1, offvalue=0, command=self.endis).grid(
                     row=row.get(), column=column.inc())
         # Scales for max limit
         row.inc()
@@ -157,7 +158,7 @@ class guiconfigurator:
 
         Label(limtag, text=_("Warning miminum emotions")).grid(
                 row=row.inc(), column=0, columnspan=8, sticky=W+E)
-        # Checkbuttons for max limit
+        # Checkbuttons for min limit
         self.wmin = []
         self.wminen = []
         column = counter()
@@ -166,9 +167,9 @@ class guiconfigurator:
             self.wminen[i] = BooleanVar()
             Checkbutton(
                     limtag, text=emotions[i], variable=self.wminen[i],
-                    onvalue=1, offvalue=0).grid(
+                    onvalue=1, offvalue=0, command=self.endis).grid(
                     row=row.get(), column=column.inc())
-        # Scales for max limit
+        # Scales for min limit
         row.inc()
         column = counter()
         for i, ign in enumerate(self.cfg.wmin):
@@ -184,12 +185,37 @@ class guiconfigurator:
         Button(limtag, text=_("Save"), command=self.save_guicfg).grid(
                 row=row.inc(), column=1)
 
-        self.cfg2gui()
+        self.cfg2gui()  # Fill with actual values
+
+        self.endis()  # Update enable/disable status of interface elementes
 
         while True:
             root.update_idletasks()
             root.update()
             time.sleep(0.05)
+
+    # Scroll enabler/disabler
+    def endis(self,):
+        if (self.showwarn.get() is True):
+            self.wsize.configure(state=NORMAL)
+            self.wx.configure(state=NORMAL)
+            self.wy.configure(state=NORMAL)
+        else:
+            self.wsize.configure(state=DISABLED)
+            self.wx.configure(state=DISABLED)
+            self.wy.configure(state=DISABLED)
+
+        for i, ign in enumerate(self.cfg.wmax):
+            if (self.wmaxen[i].get() is True):
+                self.wmax[i].config(state=NORMAL, relief=RAISED)
+            else:
+                self.wmax[i].config(state=DISABLED, relief=FLAT)
+
+        for i, ign in enumerate(self.cfg.wmin):
+            if (self.wminen[i].get() is True):
+                self.wmin[i].config(state=NORMAL, relief=RAISED)
+            else:
+                self.wmin[i].config(state=DISABLED, relief=FLAT)
 
     # Color chooser
     def wcolor(self,):
