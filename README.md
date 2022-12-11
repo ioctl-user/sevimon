@@ -4,97 +4,113 @@
 
 </div>
 
+## Оглавление
+**[Introduction](#introduction)**
+
+**[Running in Docker in Linux](#running-in-docker-in-Linux)**
+
+**[Running binary versions on Windows 10 and later](#running-binary-versions-on-Windows-10-and-later)**
+
+**[Install and run universal interpreted versions of programs](#install-and-run-universal-interpreted-versions-of-programs)**
+
+**[Project files license](#project-files-license)**
+
+**[Acknowledgements](#acknowledgements)**
 
 ## Introduction
 
-Sevimon is an open source program written in Python. It allows facial muscle tension to be monitored through a video camera, which can be used to eliminate stress, indirectly influence mood and, with long-term use, prevent the appearance of facial wrinkles.
+Sevimon is a set of open source programs written in Python. It allows facial muscle tension to be monitored through a video camera, which can be used to eliminate overstretching, indirectly influence mood and, with long-term use, prevent the appearance of facial wrinkles.
 
-Sevimon works by first identifying a face on an image and then comparing it to each of eight emotions (anger, contempt, disgust, fear, joy, no emotion, sadness, surprise), and then giving each emotion some kind of similarity rating.
+The basic Sevimon programme works like this: first a face is identified on an image, then each of the eight emotions (anger, contempt, disgust, fear, joy, no emotion, sadness, surprise) is given a sort of rating for the facial expression.
 
-The values obtained are stored in the logbook in text format for later analysis by the sevistat program.
-In addition, for each emotion in the settings file, you can set the upper and lower limits of values, at the crossing of which a reminder is issued.
+The values obtained are stored in the logbook in text format for later analysis by the `sevistat' program.
+In addition, for each emotion in the settings file, the upper and lower limits of the values can be set and a reminder is given when these are crossed.
+The settings file, whose name is displayed on start-up, can be changed in any text editor, or you can use the `sevicfg` graphical utility to configure it. The default setting is to give a warning when anger and surprise are detected, which corresponds to a frown on the eyebrows and a wrinkled forehead.
 
-At the first start-up the models are downloaded, after which the programme does not require an internet connection.
+The models are downloaded the first time you start, after which an internet connection is not required.
 
-## Direct program startup
-## Linux/UNIX
+## Running in Docker in Linux
+Prepared a Docker image with the program, all its dependencies and models, which runs without access to the network.
 
-Install the following packages from the distribution: git, python, python-pip.
-Download the project, install the dependencies that are missing in the system:
+The sevimon program is run as follows:
 ```shell
-git clone https://github.com/ioctl-user/sevimon.git
-cd sevimon
-python3 -m pip install -r requirements.txt
-```
-
-Use the command `sevimon.py` from the project folder to run it.
-To display statistics, use the command `sevistat.py` from the project folder. Currently at least two ours of stat needed.
-
-At first startup, models are downloaded, a configuration file ~/.config/sevimon/sevimon.cfg is created, which can be edited if necessary.
-The emotion log is written to the ~/.cache/sevimon/log/ .
-
-### Windows 
-
-Install package [python with built-in pip](https://www.python.org/downloads/windows/).
-Install [git package](https://git-scm.com/download/win).
-
-Run Powershell by typing Win+X and select userland mode.
-
-Enter the following commands to download the package and install the dependencies:
-```shell
-git clone https://github.com/ioctl-user/sevimon.git
-cd sevimon
-python3 -m pip install -r requirements.txt
-```
-
-Use the command `python.exe -m sevimon.py` from the project folder to run it.
-Use the command `python.exe -m sevistat.py` from the project folder to display the statistics. Currently at least two ours of stat needed.
-The first run downloads the models, creates an editable configuration file sevimon.cfg and a folder for the emotion log.
-
-In case of lack of DLL modules, install [MS Visual C](https://learn.microsoft.com/cpp/windows/latest-supported-vc-redist).
-
-## Run via Docker in Linux
-The sevimon program is started as follows:
-```shell
-xhost +localhost
 mkdir -p ~/.cache/sevimon/log/
 mkdir -p ~/.config/sevimon/
 echo > ~/.config/sevimon/sevimon.cfg
+xhost +"local:docker@"
 docker run -it --rm --privileged \
     --net=none \
-    -w /sevimon/ \
     -e DISPLAY=$DISPLAY \
     -e LANG=$LANG \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -v $HOME/.config/sevimon/sevimon.cfg:/root/.config/sevimon/sevimon.cfg \
-    -v $HOME/.cache/sevimon/log:/root/.cache/sevimon/log \
+    -v $HOME/.cache/sevimon/log:/root/.local/state/sevimon/log \
     -v /dev/video0:/dev/video0 \
-    ioctl2/sevimon /sevimon/sevimon.py
-xhost -localhost
+    ioctl2/sevimon:latest sevimon
+xhost -"local:docker@"
 ```
-The sevistat program is started as follows:
+The sevistat programme is started with a command:
 ```shell
-xhost +localhost
+xhost +"local:docker@"
 docker run -it --rm --privileged \
     --net=none \
-    -w /sevimon/ \
     -e DISPLAY=$DISPLAY \
     -e LANG=$LANG \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -v $HOME/.config/sevimon/sevimon.cfg:/root/.config/sevimon/sevimon.cfg \
-    -v $HOME/.cache/sevimon/log:/root/.cache/sevimon/log \
-    ioctl2/sevimon /sevimon/sevistat.py
-xhost -localhost
+    -v $HOME/.cache/sevimon/log:/root/.local/state/sevimon/log \
+    ioctl2/sevimon:latest sevistat
+xhost -"local:docker@"
+```
+The sevicfg programme is started as follows:
+```shell
+xhost +"local:docker@"
+docker run -it --rm --privileged \
+    --net=none \
+    -e DISPLAY=$DISPLAY \
+    -e LANG=$LANG \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:/root/.Xauthority \
+    -v $HOME/.config/sevimon/sevimon.cfg:/root/.config/sevimon/sevimon.cfg \
+    -v $HOME/.cache/sevimon/log:/root/.local/state/sevimon/log \
+    ioctl2/sevimon:latest sevicfg
+xhost -"local:docker@"
 ```
 
-## Project file licence
+## Running binary versions on Windows 10 and later
+Prepared [binary program builds](https://github.com/ioctl-user/sevimon/releases/download/v0.1/sevimon_win10_v0.1.zip) with all its dependencies for Windows (x86\_64). Models are automatically downloaded the first time you run it.
 
-AGPL v3 or newer
+## Install and run universal interpreted versions of programs
+### Preparatory steps for Linux/UNIX
+Install the python and python-pip packages from the distribution.
+
+### Preparatory steps for Windows 
+Install package [python along with built-in pip](https://www.python.org/downloads/windows/).
+
+In case of lack of DLL at startup, install [MS Visual C](https://learn.microsoft.com/cpp/windows/latest-supported-vc-redist).
+
+Run Powershell by typing Win+X and selecting to run as a normal user.
+
+### Installation and startup
+
+Install the project with all dependencies:
+```shell
+python3 -m pip install sevimon
+```
+
+Warnings may appear during the process asking to add the executable path to the environment variables - this should be done.
+
+Use the ``sevimon'' command to start the main program. The first run downloads the models and creates a text configuration file.
+You can run the program `sevicfg` to configure it.
+Use the command `sevistat` to display statistics. It must have been accumulated for at least 2 hours beforehand.
+
+## Project files licence
+
+AGPL v3 or newer.
 
 ## Acknowledgements
 
-The [Centerface](https://github.com/Star-Clouds/CenterFace/blob/master/prj-python/) project is used to search for faces in images.
-The project [HSEmotion](https://github.com/HSE-asavchenko/face-emotion-recognition) is used for emotion detection.
-
+The [Centerface] project (https://github.com/Star-Clouds/CenterFace/blob/master/prj-python/) is used to search for faces in an image.
+The [HSEmotion] project (https://github.com/HSE-asavchenko/face-emotion-recognition) is used for emotion detection.
