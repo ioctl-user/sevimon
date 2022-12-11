@@ -9,8 +9,11 @@ sys.path.append(os.path.dirname(__file__))
 from lib.guicfg import *
 
 
-if __name__ == "__main__":
+def main() -> None:
     cfg = readcfg()
     guiconfigurator(cfg)
+
+if __name__ == "__main__":
+    main()
 
 # vi: tabstop=4 shiftwidth=4 expandtab

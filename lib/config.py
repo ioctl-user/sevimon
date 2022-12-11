@@ -13,15 +13,16 @@ emotions = (_("Anger "), _("Contm."), _("Disgu."), _("Fear  "), _("Happs."), _("
 
 
 class configclass:
-     def __init__(self,):
+    def __init__(self,):
         pass
+
 
 def readcfg() -> configclass:
     cfg = configclass()
 
     config = configparser.ConfigParser()
     configname = platformdirs.user_config_dir(APPNAME) + "/" + APPNAME + ".cfg"
-    print(("Trying to read the config file ") + configname)
+    print(_("Trying to read the config file ") + configname)
     config.read(configname)
 
     needwritecfg = "common" not in config
@@ -45,19 +46,23 @@ def readcfg() -> configclass:
 
     cfg.showwarn = section.getboolean("showwarn", True)
 
-    cfg.wmax = ast.literal_eval(section.get("wmax", "[ 4.0, None, None, None, None, None, None,  1.5]"))
-    cfg.wmin = ast.literal_eval(section.get("wmin", "[None, None, None, None, None, None, None, None]"))
+    cfg.wmax = ast.literal_eval(section.get(
+            "wmax", "[ 4.0, None, None, None, None, None, None,  1.5]"))
+    cfg.wmin = ast.literal_eval(section.get(
+            "wmin", "[None, None, None, None, None, None, None, None]"))
 
     if needwritecfg:
         writecfg(cfg)
 
     return cfg
 
+
 def writecfg(cfg) -> None:
     config = configparser.ConfigParser()
     configname = platformdirs.user_config_dir(APPNAME) + "/" + APPNAME + ".cfg"
+    os.makedirs(platformdirs.user_config_dir(APPNAME), exist_ok=True)
 
-    with open(platformdirs.user_config_dir(APPNAME) + "/" + APPNAME + ".cfg", 'w') as configfile:
+    with open(configname, 'w') as configfile:
         config.add_section("common")
         section = config["common"]
         section["camera_dev"] = str(cfg.camera_dev)

@@ -8,10 +8,7 @@ import tkinter.ttk as ttk
 import threading
 import copy
 import time
-import sys
-import os
 
-sys.path.append(os.path.dirname(__file__))
 from lib.i18n import _
 from lib.config import *
 
