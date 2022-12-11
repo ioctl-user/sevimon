@@ -34,7 +34,7 @@ def main() -> None:
     i = 0
     curx = 0
     logdir = platformdirs.user_log_dir(APPNAME)
-    print("Scanning directory " + logdir + " for statistics")
+    print(_("Scanning directory {} for statistics").format(logdir))
     for file in sorted(os.listdir(logdir)):
         date = file
         year, mon, day = file.split(".")

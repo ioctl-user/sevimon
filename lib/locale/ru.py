@@ -21,6 +21,7 @@ translation["ru"] = {
     "FPS" : "Кадры в секунду",
     "Reset" : "Сбросить",
     "Save" : "Сохранить",
+    "Scanning directory {} for statistics" : "Открываю статистику в каталоге {}",
     "Show picture" : "Показывать изображение",
     "Show warning" : "Показывать предупреждение",
     "Trying to read the config file " : "Пробую прочитать файл настроек ",
