@@ -4,7 +4,7 @@
 
 </div>
 
-## Оглавление
+## Table of contents
 **[Introduction](#introduction)**
 
 **[Running in Docker in Linux](#running-in-docker-in-Linux)**
@@ -21,9 +21,9 @@
 
 Sevimon is a set of open source programs written in Python. It allows facial muscle tension to be monitored through a video camera, which can be used to eliminate overstretching, indirectly influence mood and, with long-term use, prevent the appearance of facial wrinkles.
 
-The basic Sevimon programme works like this: first a face is identified on an image, then each of the eight emotions (anger, contempt, disgust, fear, joy, no emotion, sadness, surprise) is given a sort of rating for the facial expression.
+The basic `sevimon` program works like this: first a face is identified on an image, then each of the eight emotions (anger, contempt, disgust, fear, happiness, no emotion, sadness, surprise) is given a kind of rating for the facial expression.
 
-The values obtained are stored in the logbook in text format for later analysis by the `sevistat' program.
+The values obtained are stored in the logbook in text format for later analysis by the `sevistat` program.
 In addition, for each emotion in the settings file, the upper and lower limits of the values can be set and a reminder is given when these are crossed.
 The settings file, whose name is displayed on start-up, can be changed in any text editor, or you can use the `sevicfg` graphical utility to configure it. The default setting is to give a warning when anger and surprise are detected, which corresponds to a frown on the eyebrows and a wrinkled forehead.
 
@@ -102,7 +102,7 @@ python3 -m pip install sevimon
 
 Warnings may appear during the process asking to add the executable path to the environment variables - this should be done.
 
-Use the ``sevimon'' command to start the main program. The first run downloads the models and creates a text configuration file.
+Use the `sevimon` command to start the main program. The first run downloads the models and creates a text configuration file.
 You can run the program `sevicfg` to configure it.
 Use the command `sevistat` to display statistics. It must have been accumulated for at least 2 hours beforehand.
 
