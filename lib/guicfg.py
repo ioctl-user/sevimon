@@ -96,6 +96,12 @@ class guiconfigurator:
                 misctab, text=_("Write stat file"), variable=self.writestat,
                 onvalue=1, offvalue=0).grid(row=row.inc(), column=0, sticky=W)
 
+        self.beepwarn = BooleanVar()
+        Checkbutton(
+                misctab, text=_("Beep on warning (depend on system settings)"), variable=self.beepwarn,
+                command=self.endis,
+                onvalue=1, offvalue=0).grid(row=row.inc(), column=0, sticky=W)
+
         self.showwarn = BooleanVar()
         Checkbutton(
                 misctab, text=_("Show warning"), variable=self.showwarn,
@@ -282,6 +288,7 @@ class guiconfigurator:
         newcfg.showcap = self.showcap.get()
         newcfg.writestat = self.writestat.get()
         newcfg.showwarn = self.showwarn.get()
+        newcfg.beepwarn = self.beepwarn.get()
 
         try:
             newcfg.wsize = int(self.wsize.get())
@@ -351,6 +358,7 @@ class guiconfigurator:
         self.showcap.set(1 if self.cfg.showcap else 0)
         self.writestat.set(1 if self.cfg.writestat else 0)
         self.showwarn.set(1 if self.cfg.showwarn else 0)
+        self.beepwarn.set(1 if self.cfg.beepwarn else 0)
         self.wsize.delete(0, END)
         self.wsize.insert(0, str(self.cfg.wsize))
         self.wx.delete(0, END)

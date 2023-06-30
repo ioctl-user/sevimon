@@ -45,6 +45,7 @@ def readcfg() -> configclass:
     cfg.wcolor = ast.literal_eval(section.get("wcolor", "(0, 255, 0)"))
 
     cfg.showwarn = section.getboolean("showwarn", True)
+    cfg.beepwarn = section.getboolean("beepwarn", False)
 
     cfg.wmax = ast.literal_eval(section.get(
             "wmax", "[ 4.0, None, None, None, None, None, None,  1.5]"))
@@ -76,6 +77,7 @@ def writecfg(cfg) -> None:
         section["wy"] = str(cfg.wy)
         section["wcolor"] = str(cfg.wcolor)
         section["showwarn"] = str(cfg.showwarn)
+        section["beepwarn"] = str(cfg.beepwarn)
         section["wmax"] = str(cfg.wmax)
         section["wmin"] = str(cfg.wmin)
 

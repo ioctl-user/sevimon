@@ -20,6 +20,7 @@ wcolor = (0, 255, 0) # In BGR format
 
 # Minimum and maximum emotion score limits to show warning
 # See lib/i18n.py file for related emotions
-showwarn = True
+showwarn = True # Show warning window
+beepwarn = False # Beep on warning, if allowed by system
 wmax = [ 4.0, None, None, None, None, None, None,  1.5]
 wmin = [None, None, None, None, None, None, None, None]

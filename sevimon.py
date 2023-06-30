@@ -47,10 +47,10 @@ def writestat(i, scores) -> None:
         fp.close()
 
 
-def showwarn(i, scores) -> None:
-    # Show window with detected face
+def warn_actions(i, scores) -> None:
+    # Check warning state and notify user
     wname = "Face warn"
-    ws = False
+    ws = False # Warning state flag
     for e in range(len(emotions)):
         if cfg.wmin[e] and scores[e] < cfg.wmin[e]:
             ws = True
@@ -59,7 +59,8 @@ def showwarn(i, scores) -> None:
             ws = True
             break
     try:
-        if ws:
+        if ws and cfg.showwarn:
+            # Show window with detected face
             if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) < 1:
                 # Use OpenCV to avoid excess dependencies
                 wimg = numpy.zeros((cfg.wsize, cfg.wsize, 3), numpy.uint8)
@@ -75,6 +76,9 @@ def showwarn(i, scores) -> None:
                 cv2.resizeWindow(wname, cfg.wsize, cfg.wsize)
                 cv2.moveWindow(wname, cfg.wx, cfg.wy)
                 cv2.imshow(wname, wimg)
+        if ws and cfg.beepwarn:
+            # Generate system beep
+            print("\a", end="")
         else:
             if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) > 0:
                 cv2.destroyWindow(wname)
@@ -124,8 +128,7 @@ def main() -> None:
             emotion, scores = fer.predict_emotions(face_img,logits=True)
             cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (255, 0, 0), 1)
 
-            if cfg.showwarn:
-                showwarn(i, scores)
+            warn_actions(i, scores)
             writestat(i, scores)
 
             i = i + 1
