@@ -8,7 +8,7 @@ import os
 from lib.i18n import _
 
 
-APPNAME = "sevimon"
+ANAME = "sevimon"
 emotions = (_("Anger "), _("Contm."), _("Disgu."), _("Fear  "), _("Happs."), _("Neutr."), _("Sadns."), _("Surpr."))
 
 
@@ -21,7 +21,7 @@ def readcfg() -> configclass:
     cfg = configclass()
 
     config = configparser.ConfigParser()
-    configname = platformdirs.user_config_dir(APPNAME) + "/" + APPNAME + ".cfg"
+    configname = platformdirs.user_config_dir(ANAME) + "/" + ANAME + ".cfg"
     print(_("Trying to read the config file ") + configname)
     config.read(configname)
 
@@ -60,8 +60,8 @@ def readcfg() -> configclass:
 
 def writecfg(cfg) -> None:
     config = configparser.ConfigParser()
-    configname = platformdirs.user_config_dir(APPNAME) + "/" + APPNAME + ".cfg"
-    os.makedirs(platformdirs.user_config_dir(APPNAME), exist_ok=True)
+    configname = platformdirs.user_config_dir(ANAME) + "/" + ANAME + ".cfg"
+    os.makedirs(platformdirs.user_config_dir(ANAME), exist_ok=True)
 
     with open(configname, 'w') as configfile:
         config.add_section("common")
@@ -81,8 +81,8 @@ def writecfg(cfg) -> None:
         section["wmax"] = str(cfg.wmax)
         section["wmin"] = str(cfg.wmin)
 
-        if not os.path.exists(platformdirs.user_config_dir(APPNAME)):
-            os.makedirs(platformdirs.user_config_dir(APPNAME))
+        if not os.path.exists(platformdirs.user_config_dir(ANAME)):
+            os.makedirs(platformdirs.user_config_dir(ANAME))
         print(_("Writing to the config file ") + configname)
         config.write(configfile)
 

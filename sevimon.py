@@ -22,23 +22,23 @@ cfg = readcfg()
 
 def writestat(i, scores) -> None:
     now = datetime.now()
-    print(now.strftime("%H:%M:%S "), end='')
+    print(f'{now.strftime("%H:%M:%S")} ', end='')
 
     # Print scores
     emax = numpy.argmax(scores)
-    print("[", i, "]:", emotions[emax], "; ", end='')
+    print(f'[{i}]: {emotions[emax]}; ', end='')
     for e in range(len(emotions)):
-        print("%s: %4.1lf" % (emotions[e], scores[e]), end='')
+        print(f'{emotions[e]}: {scores[e]:4.1f}', end='')
         if e < (len(emotions) - 1):
-            print(", ", end='')
+            print(f', ', end='')
         else:
-            print(" ")
+            print('')
 
     # Write to logs
     if cfg.writestat:
-        if not os.path.exists(platformdirs.user_log_dir(APPNAME)):
-            os.makedirs(platformdirs.user_log_dir(APPNAME))
-        fp = open(platformdirs.user_log_dir(APPNAME) + "/" + now.strftime("%Y.%m.%d"), 'a')
+        if not os.path.exists(platformdirs.user_log_dir(ANAME)):
+            os.makedirs(platformdirs.user_log_dir(ANAME))
+        fp = open(platformdirs.user_log_dir(ANAME) + "/" + now.strftime("%Y.%m.%d"), 'a')
         str = now.strftime("%H:%M:%S")
         for e in range(len(emotions)):
             str = str + " %4.1lf" % (scores[e])
@@ -82,8 +82,8 @@ def warn_actions(i, scores) -> None:
         else:
             if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) > 0:
                 cv2.destroyWindow(wname)
-    except Exception as e:
-        print(f'Warning!\n{e}')
+    except Exception as exc:
+        print(f'Warning: {exc}')
 
 
 def main() -> None:
@@ -95,36 +95,32 @@ def main() -> None:
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, cfg.img_w)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, cfg.img_h)
     cap.set(cv2.CAP_PROP_FPS, cfg.fps * 2)  # FPS, multiplication by 2 because of hack to clean buffer
-    real_fps = int(cap.get(5))  # Get really set FPS
+    real_fps = int(cap.get(5))  # Get actual FPS from hardware
     skip_frames = real_fps / cfg.fps - 1  # Is there a better way?
 
     centerface = CenterFace()
-    fer = HSEmotionRecognizer(model_name=MODEL_NAME)
+    fer = HSEmotionRecognizer(MODEL_NAME)
 
     while True:
         for i in range(int(skip_frames)):
             cap.grab()
         ret, image_bgr = cap.read()
         if not ret:
-            print("Cannot read camera image")
+            print("Can't read camera image")
             return
 
         image = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-#        dt1 = datetime.now()
-        bounding_boxes, points = centerface(image_bgr, cfg.img_h, cfg.img_w, threshold=0.35)
-#        dt2 = datetime.now()
-#        print(dt2 - dt1)
         bounding_boxes, _ = centerface(image_bgr, cfg.img_h, cfg.img_w, threshold=0.35)
 
         i = 0
         for bbox in bounding_boxes:
-            x1, y1, x2, y2 = [int(_) for _ in bbox[:4]]
-            if (x1 < 0): x1 = 0
-            if (y1 < 0): y1 = 0
+            x1, y1, x2, y2 = [round(b) for b in bbox[0:4]]
+            if (x1 <= 0): x1 = 0
+            if (y1 <= 0): y1 = 0
             if (x2 >= cfg.img_w): x2 = cfg.img_w - 1
             if (y2 >= cfg.img_h): y2 = cfg.img_h - 1
 
-            face_img = image[y1:y2, x1:x2, :]
+            face_img = image[y1:y2, x1:x2]
             emotion, scores = fer.predict_emotions(face_img,logits=True)
             cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (255, 0, 0), 1)
 

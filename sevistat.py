@@ -26,25 +26,25 @@ def main() -> None:
     sad = []
     surp = []
 
-    #pattlen = 16 # Ugly hack: ignore seconds
-    pattlen = 13 # Ugly hack: ignore minutes
+    #cutlen = 16 # Hack to ignore seconds
+    cutlen = 13 # Hack to ignore minutes
 
     # Read all files in the log dir
     dtold = None
     i = 0
     curx = 0
-    logdir = platformdirs.user_log_dir(APPNAME)
+    logdir = platformdirs.user_log_dir(ANAME)
     print(_("Scanning directory {} for statistics").format(logdir))
-    for file in sorted(os.listdir(logdir)):
-        date = file
-        year, mon, day = file.split(".")
+    for logname in sorted(os.listdir(logdir)):
+        date = logname
+        year, mon, day = logname.split(".")
 
-        with open(logdir + "/" + file, 'r') as f:
-            for line in f:
-                time, _ang, _cont, _disq, _fear, _happ, _neutr, _sad, _surp = line.split()
-                hour, mn, sec = time.split(":")
-                dt = date + " " + time
-                dt = dt[:pattlen]
+        with open(logdir + "/" + logname, 'r') as f:
+            for record in f:
+                hms, _ang, _cont, _disq, _fear, _happ, _neutr, _sad, _surp = record.split()
+                hour, mn, sec = hms.split(":")
+                dt = date + " " + hms
+                dt = dt[:cutlen]
                 if dt == dtold:
                     m_ang += float(_ang)
                     m_cont += float(_cont)
@@ -112,9 +112,9 @@ def main() -> None:
 
     plt.xticks(x, dtime,  rotation=80)
 
-    plt.margins(x=0, y=0)
+    plt.margins(x=0.0, y=0.0)
     plt.legend()
-    plt.subplots_adjust(bottom=0.2, top=0.98, left=.03, right=0.97)
+    plt.subplots_adjust(bottom=0.2, top=0.98, left=0.03, right=0.97)
     plt.show()
 
 
