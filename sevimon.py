@@ -76,12 +76,12 @@ def warn_actions(i, scores) -> None:
                 cv2.resizeWindow(wname, cfg.wsize, cfg.wsize)
                 cv2.moveWindow(wname, cfg.wx, cfg.wy)
                 cv2.imshow(wname, wimg)
-        if ws and cfg.beepwarn:
-            # Generate system beep
-            print("\a", end="")
         else:
             if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) > 0:
                 cv2.destroyWindow(wname)
+        if ws and cfg.beepwarn:
+            # Generate system beep
+            print("\a", end="")
     except Exception as exc:
         print(f'Warning: {exc}')
 
