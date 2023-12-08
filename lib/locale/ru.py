@@ -22,7 +22,7 @@ translation["ru"] = {
     "Reset" : "Сбросить",
     "Save" : "Сохранить",
     "Scanning directory {} for statistics" : "Открываю статистику в каталоге {}",
-    "Show picture" : "Показывать изображение",
+    "Show camera picture" : "Показывать изображение с камеры",
     "Beep on warning (depend on system settings)" : "Звуковое предупреждение (зависит от системных настроек)",
     "Show warning" : "Показывать предупреждение",
     "Trying to read the config file " : "Пробую прочитать файл настроек ",

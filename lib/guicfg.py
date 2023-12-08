@@ -88,7 +88,7 @@ class guiconfigurator:
 
         self.showcap = BooleanVar()
         Checkbutton(
-                misctab, text=_("Show picture"), variable=self.showcap,
+                misctab, text=_("Show camera picture"), variable=self.showcap,
                 onvalue=1, offvalue=0).grid(row=row.inc(), column=0, sticky=W)
 
         self.writestat = BooleanVar()
