@@ -98,6 +98,10 @@ def main() -> None:
     real_fps = int(cap.get(5))  # Get actual FPS from hardware
     skip_frames = real_fps / cfg.fps - 1  # Is there a better way?
 
+    # Set main window properties
+    cv2.namedWindow('Video', cv2.WINDOW_GUI_NORMAL | cv2.WINDOW_AUTOSIZE)
+
+    # Set neural networks
     centerface = CenterFace()
     fer = HSEmotionRecognizer(MODEL_NAME)
 
@@ -130,8 +134,13 @@ def main() -> None:
             i = i + 1
 
         if cfg.showcap:
-            # HSE image box
+            # Exit if main window was closed by user
+            if cv2.getWindowProperty('Video', cv2.WND_PROP_VISIBLE) < 1:
+                break
+
+            # Show captured image with the detected box
             cv2.imshow('Video', image_bgr)
+
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
