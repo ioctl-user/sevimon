@@ -5,7 +5,6 @@
 from tkinter import *
 from tkinter.colorchooser import askcolor
 import tkinter.ttk as ttk
-import threading
 import copy
 import time
 
@@ -32,8 +31,7 @@ class counter(object):
 class guiconfigurator:
     def __init__(self, cfg):
         self.cfg = cfg
-        guithread = threading.Thread(target=self.__create_window, args=())
-        guithread.start()
+        self.__create_window()
 
     def __close_window(self):
         self.running = False
