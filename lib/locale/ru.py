@@ -12,6 +12,8 @@ translation["ru"] = {
     "Surpr." : "Удивл.",
 
     # Всё остальное в алфавитном порядке
+    "Can't open camera {}" : "Не удаётся открыть камеру {}",
+    "Can't read camera image" : "Не удаётся получить изображение с камеры",
     "Camera number" : "Номер камеры",
     "Color Chooser" : "Выбор цвета",
     "Common settings" : "Общие настройки",

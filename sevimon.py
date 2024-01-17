@@ -89,8 +89,8 @@ def warn_actions(i, scores) -> None:
 def main() -> None:
     cap = cv2.VideoCapture(cfg.camera_dev)
     if not cap.isOpened():
-        print ("Couldn't open camera {}".format(cfg.camera_dev))
-        exit
+        print (_("Can't open camera {}").format(cfg.camera_dev))
+        return -1
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, cfg.img_w)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, cfg.img_h)
@@ -110,11 +110,11 @@ def main() -> None:
             cap.grab()
         ret, image_bgr = cap.read()
         if not ret:
-            print("Can't read camera image")
-            return
+            print(_("Can't read camera image"))
+            return -1
 
         image = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-        bounding_boxes, _ = centerface(image_bgr, cfg.img_h, cfg.img_w, threshold=0.35)
+        bounding_boxes, ign = centerface(image_bgr, cfg.img_h, cfg.img_w, threshold=0.35)
 
         i = 0
         for bbox in bounding_boxes:
