@@ -47,7 +47,7 @@ def writestat(i, scores) -> None:
         fp.close()
 
 
-def warn_actions(i, scores) -> None:
+def warn_actions(i, scores, wws):
     # Check warning state and notify user
     wname = "Face warn"
     ws = False # Warning state flag
@@ -59,34 +59,48 @@ def warn_actions(i, scores) -> None:
             ws = True
             break
     try:
-        if ws and cfg.showwarn:
-            # Show window with detected face
-            if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) < 1:
-                # Use OpenCV to avoid excess dependencies
-                wimg = numpy.zeros((cfg.wsize, cfg.wsize, 3), numpy.uint8)
-                wimg = cv2.rectangle(wimg, (0, 0), (cfg.wsize - 1, cfg.wsize - 1), cfg.wcolor, -1)
-                font = cv2.FONT_HERSHEY_SIMPLEX
-                text = "!"
-                linew = int(cfg.wsize/32)
-                textsize = cv2.getTextSize(text, font, 1, linew)[0]
-                textx = int((wimg.shape[1] - textsize[0]) / 2)
-                texty = int((wimg.shape[0] + textsize[1]) / 2)
-                cv2.putText(wimg, "!", (textx, texty), font, 1, (0, 0, 0), linew)
-                cv2.namedWindow(wname, cv2.WINDOW_NORMAL | cv2.WINDOW_FREERATIO | cv2.WINDOW_GUI_NORMAL | cv2.WND_PROP_TOPMOST)
-                cv2.resizeWindow(wname, cfg.wsize, cfg.wsize)
-                cv2.moveWindow(wname, cfg.wx, cfg.wy)
-                cv2.imshow(wname, wimg)
-        else:
-            if cv2.getWindowProperty(wname, cv2.WND_PROP_VISIBLE) > 0:
-                cv2.destroyWindow(wname)
+        # Show warning window in case of:
+        #     it's warning condition, it's on in cfg, has no warning window yet
+        if ws and cfg.showwarn and not wws:
+            # Use OpenCV to avoid excess dependencies
+
+            w = cfg.wsize
+            h = cfg.wsize
+            if sys.platform == 'darwin' and w < 200:
+                # Mac OS doesn't allow windows width less than 200, so...
+                w = 200
+
+            wimg = numpy.zeros((h, w, 3), numpy.uint8)
+            wimg = cv2.rectangle(wimg, (0, 0), (w - 1, h - 1), cfg.wcolor, -1)
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            text = "!"
+            linew = int(h / 32)
+            textsize = cv2.getTextSize(text, font, 1, linew)[0]
+            textx = int((wimg.shape[1] - textsize[0]) / 2)
+            texty = int((wimg.shape[0] + textsize[1]) / 2)
+            cv2.putText(wimg, "!", (textx, texty), font, 1, (0, 0, 0), linew)
+            cv2.namedWindow(wname, cv2.WINDOW_NORMAL | cv2.WINDOW_FREERATIO | cv2.WINDOW_GUI_NORMAL)
+            cv2.resizeWindow(wname, w, h)
+            cv2.moveWindow(wname, cfg.wx, cfg.wy)
+            cv2.setWindowProperty(wname, cv2.WND_PROP_TOPMOST, 1)
+            cv2.imshow(wname, wimg)
+        # Destroy warning window in case of:
+        #     it's not to be shown (cfg and condition) and has previous window
+        elif not (cfg.showwarn and ws) and wws:
+            cv2.destroyWindow(wname)
+
         if ws and cfg.beepwarn:
             # Generate system beep
             print("\a", end="")
     except Exception as exc:
         print(f'Warning: {exc}')
 
+    return ws and cfg.showwarn
+
 
 def main() -> None:
+    wws = False # Warning windows was shown flag
+
     cap = cv2.VideoCapture(cfg.camera_dev)
     if not cap.isOpened():
         print (_("Can't open camera {}").format(cfg.camera_dev))
@@ -128,7 +142,7 @@ def main() -> None:
             emotion, scores = fer.predict_emotions(face_img,logits=True)
             cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (255, 0, 0), 1)
 
-            warn_actions(i, scores)
+            wws = warn_actions(i, scores, wws)
             writestat(i, scores)
 
             i = i + 1
