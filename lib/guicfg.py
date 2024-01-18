@@ -50,13 +50,13 @@ class guiconfigurator:
 
         # Create used tabs
         misctab = ttk.Frame(nb)
-        limtag = ttk.Frame(nb)
+        limtab = ttk.Frame(nb)
 
         misctab.pack(fill=BOTH, expand=True)
-        limtag.pack(fill=BOTH, expand=True)
+        limtab.pack(fill=BOTH, expand=True)
 
         nb.add(misctab, text=_("Common settings"))
-        nb.add(limtag, text=_("Warning limits"))
+        nb.add(limtab, text=_("Warning limits"))
 
         #
         # Common settings
@@ -137,7 +137,7 @@ class guiconfigurator:
         #
         row = counter()
 
-        Label(limtag, text=_("Warning maximum emotions")).grid(
+        Label(limtab, text=_("Warning maximum emotions")).grid(
                 row=row.inc(), column=0, columnspan=8, sticky=W+E)
 
         # Checkbuttons for max limit
@@ -148,7 +148,7 @@ class guiconfigurator:
             self.wmaxen.append(None)
             self.wmaxen[i] = BooleanVar()
             Checkbutton(
-                    limtag, text=emotions[i], variable=self.wmaxen[i],
+                    limtab, text=emotions[i], variable=self.wmaxen[i],
                     onvalue=1, offvalue=0, command=self.endis).grid(
                     row=row.get(), column=column.inc())
         # Scales for max limit
@@ -156,13 +156,13 @@ class guiconfigurator:
         column = counter()
         for i, ign in enumerate(self.cfg.wmax):
             self.wmax.append(Scale(
-                    limtag, orient=VERTICAL, length=300,
+                    limtab, orient=VERTICAL, length=300,
                     from_=5, to=-5, tickinterval=0.0, resolution=0.1))
             self.wmax[i].grid(row=row.get(), column=column.inc())
 
         row.inc()
 
-        Label(limtag, text=_("Warning miminum emotions")).grid(
+        Label(limtab, text=_("Warning miminum emotions")).grid(
                 row=row.inc(), column=0, columnspan=8, sticky=W+E)
         # Checkbuttons for min limit
         self.wmin = []
@@ -172,7 +172,7 @@ class guiconfigurator:
             self.wminen.append(None)
             self.wminen[i] = BooleanVar()
             Checkbutton(
-                    limtag, text=emotions[i], variable=self.wminen[i],
+                    limtab, text=emotions[i], variable=self.wminen[i],
                     onvalue=1, offvalue=0, command=self.endis).grid(
                     row=row.get(), column=column.inc())
         # Scales for min limit
@@ -180,15 +180,15 @@ class guiconfigurator:
         column = counter()
         for i, ign in enumerate(self.cfg.wmin):
             self.wmin.append(Scale(
-                    limtag, orient=VERTICAL, length=300, from_=5, to=-5,
+                    limtab, orient=VERTICAL, length=300, from_=5, to=-5,
                     tickinterval=0.0, resolution=0.1))
             self.wmin[i].grid(row=row.get(), column=column.inc())
 
         row.inc()
 
-        Button(limtag, text=_("Reset"), command=self.cfg2gui).grid(
+        Button(limtab, text=_("Reset"), command=self.cfg2gui).grid(
                 row=row.get(), column=0)
-        Button(limtag, text=_("Save"), command=self.save_guicfg).grid(
+        Button(limtab, text=_("Save"), command=self.save_guicfg).grid(
                 row=row.inc(), column=1)
 
         self.cfg2gui()  # Fill with actual values
