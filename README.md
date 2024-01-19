@@ -21,7 +21,7 @@
 
 Sevimon is a set of open source programs written in Python. It allows facial muscle tension to be monitored through a video camera, which can be used to eliminate overstretching, indirectly influence mood and, with long-term use, prevent the appearance of facial wrinkles.
 
-The basic `sevimon` program works like this: first a face is identified on an image, then each of the eight emotions (anger, contempt, disgust, fear, happiness, no emotion, sadness, surprise) is given a kind of rating for the facial expression.
+The basic `sevimon` program works as follows: first a face is detected on the image from the video camera, then a certain evaluation of the facial expression is given for each of the eight emotions (anger, contempt, disgust, fear, joy, no emotion, sadness, surprise). If necessary, the `sevicfg` setup program allows you to select one of several video cameras installed in the system.
 
 The values obtained are stored in the logbook in text format for later analysis by the `sevistat` program.
 In addition, for each emotion in the settings file, the upper and lower limits of the values can be set and a reminder is given when these are crossed.
