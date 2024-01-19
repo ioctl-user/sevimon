@@ -3,8 +3,11 @@
 # Licensed under AGPLv3+
 
 import os
-import cv2
 import sys
+
+os.environ["OPENCV_LOG_LEVEL"]="FATAL" # Suppress OpenCV messages
+
+import cv2
 import numpy
 from datetime import datetime
 import platformdirs
@@ -14,10 +17,12 @@ sys.path.append(os.path.dirname(__file__))
 from lib.centerface import CenterFace
 from lib.i18n import _
 from lib.config import *
+from lib.cam import *
 
 
 MODEL_NAME='enet_b0_8_best_vgaf'
 cfg = readcfg()
+cam = cam_class()
 
 
 def writestat(i, scores) -> None:
@@ -97,20 +102,12 @@ def warn_actions(i, scores, wws):
 
     return ws and cfg.showwarn
 
-
 def main() -> None:
     wws = False # Warning windows was shown flag
 
-    cap = cv2.VideoCapture(cfg.camera_dev)
-    if not cap.isOpened():
-        print (_("Can't open camera {}").format(cfg.camera_dev))
+    ret, cap = cam.find_camera(cfg)
+    if ret is False:
         return -1
-
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, cfg.img_w)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, cfg.img_h)
-    cap.set(cv2.CAP_PROP_FPS, cfg.fps * 2)  # FPS, multiplication by 2 because of hack to clean buffer
-    real_fps = int(cap.get(5))  # Get actual FPS from hardware
-    skip_frames = real_fps / cfg.fps - 1  # Is there a better way?
 
     # Set main window properties
     cv2.namedWindow('Video', cv2.WINDOW_GUI_NORMAL | cv2.WINDOW_AUTOSIZE)
@@ -120,9 +117,7 @@ def main() -> None:
     fer = HSEmotionRecognizer(MODEL_NAME)
 
     while True:
-        for i in range(int(skip_frames)):
-            cap.grab()
-        ret, image_bgr = cap.read()
+        ret, image_bgr = cam.get_next_frame()
         if not ret:
             print(_("Can't read camera image"))
             return -1
