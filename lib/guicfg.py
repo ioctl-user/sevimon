@@ -46,14 +46,14 @@ class guiconfigurator:
         root = Tk()
         root.protocol("WM_DELETE_WINDOW", self.__close_window)
         nb = ttk.Notebook(root)
-        nb.pack(fill='both', expand='yes')
+        nb.grid()
 
         # Create used tabs
         misctab = ttk.Frame(nb)
         limtab = ttk.Frame(nb)
 
-        misctab.pack(fill=BOTH, expand=True)
-        limtab.pack(fill=BOTH, expand=True)
+        misctab.grid()
+        limtab.grid()
 
         nb.add(misctab, text=_("Common settings"))
         nb.add(limtab, text=_("Warning limits"))
