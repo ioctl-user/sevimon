@@ -22,7 +22,7 @@ from lib.cam import *
 
 MODEL_NAME='enet_b0_8_best_vgaf'
 cfg = readcfg()
-cam = cam_class()
+cam = cam_class(cfg)
 
 
 def writestat(i, scores) -> None:
@@ -105,7 +105,7 @@ def warn_actions(i, scores, wws):
 def main() -> None:
     wws = False # Warning windows was shown flag
 
-    ret, cap = cam.find_camera(cfg)
+    ret, cap = cam.find_camera()
     if ret is False:
         return -1
 
