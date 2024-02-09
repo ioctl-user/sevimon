@@ -21,6 +21,8 @@ translation["ru"] = {
     "Config validated" : "Настройки проверены",
     "Errors detected" : "Обнаружены ошибки",
     "FPS" : "Кадры в секунду",
+    "Limits settings" : "Настройки пределов",
+    "Lower limits" : "Нижние границы",
     "Reset" : "Сбросить",
     "Save" : "Сохранить",
     "Scanning directory {} for statistics" : "Открываю статистику в каталоге {}",
@@ -31,14 +33,12 @@ translation["ru"] = {
     "Video height" : "Высота видео",
     "Video width" : "Ширина видео",
     "Warning color" : "Цвет предупреждения",
-    "Warning limits" : "Границы для предупреждения",
-    "Warning maximum emotions" : "Максимальные значения для предупреждения",
-    "Warning miminum emotions" : "Минимальные значения для предупреждения",
     "Warning window size" : "Размер окна с предупреждением",
     "Warning window X pos" : "Координата X предупреждения",
     "Warning window Y pos" : "Координата Y предупреждения",
     "Write stat file" : "Сохранять статистику в файл",
     "Writing to the config file " : "Записываю файл настроек ",
+    "Upper limits" : "Верхние границы",
 }
 
 # vi: tabstop=4 shiftwidth=4 expandtab

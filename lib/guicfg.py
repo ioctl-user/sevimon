@@ -56,7 +56,7 @@ class guiconfigurator:
         limtab.grid()
 
         nb.add(misctab, text=_("Common settings"))
-        nb.add(limtab, text=_("Warning limits"))
+        nb.add(limtab, text=_("Limits settings"))
 
         #
         # Common settings
@@ -137,7 +137,7 @@ class guiconfigurator:
         #
         row = counter()
 
-        Label(limtab, text=_("Warning maximum emotions")).grid(
+        Label(limtab, text=_("Upper limits")).grid(
                 row=row.inc(), column=0, columnspan=8, sticky=W+E)
 
         # Checkbuttons for max limit
@@ -162,7 +162,7 @@ class guiconfigurator:
 
         row.inc()
 
-        Label(limtab, text=_("Warning miminum emotions")).grid(
+        Label(limtab, text=_("Lower limits")).grid(
                 row=row.inc(), column=0, columnspan=8, sticky=W+E)
         # Checkbuttons for min limit
         self.wmin = []
