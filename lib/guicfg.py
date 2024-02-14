@@ -39,21 +39,17 @@ class guiconfigurator:
     # Main function of the class
     def __create_window(self):
 
-        self.note = ""  # Notice message, be filled later
         self.savedentcolor = None  # Default entry background color
         self.running = True
 
         root = Tk()
         root.protocol("WM_DELETE_WINDOW", self.__close_window)
         nb = ttk.Notebook(root)
-        nb.grid()
+        nb.pack(side=TOP)
 
         # Create used tabs
         misctab = ttk.Frame(nb)
         limtab = ttk.Frame(nb)
-
-        misctab.grid()
-        limtab.grid()
 
         nb.add(misctab, text=_("Common settings"))
         nb.add(limtab, text=_("Limits settings"))
@@ -124,14 +120,6 @@ class guiconfigurator:
         Button(misctab, text=_("Warning color"), command=self.wcolor).grid(
                 row=row.inc(), column=0)
 
-        self.note = Label(misctab, text=self.note)
-        self.note.grid(row=row.inc(), column=0, sticky=W)
-
-        Button(misctab, text=_("Reset"), command=self.cfg2gui).grid(
-                row=row.get(), column=0)
-        Button(misctab, text=_("Save"), command=self.save_guicfg).grid(
-                row=row.inc(), column=1)
-
         #
         # Limits settings
         #
@@ -186,10 +174,10 @@ class guiconfigurator:
 
         row.inc()
 
-        Button(limtab, text=_("Reset"), command=self.cfg2gui).grid(
-                row=row.get(), column=0)
-        Button(limtab, text=_("Save"), command=self.save_guicfg).grid(
-                row=row.inc(), column=1)
+        self.note = Label(root, text="")
+        self.note.pack(side=TOP, anchor=W)
+        Button(root, text=_("Save"), command=self.save_guicfg).pack(side=LEFT)
+        Button(root, text=_("Reset"), command=self.cfg2gui).pack(side=LEFT)
 
         self.cfg2gui()  # Fill with actual values
 
@@ -381,5 +369,8 @@ class guiconfigurator:
             else:
                 self.wminen[i].set(0)
                 self.wmin[i].set(0)
+
+        # Reset note, if it was
+        self.note.config(text="")
 
 # vi: tabstop=4 shiftwidth=4 expandtab
