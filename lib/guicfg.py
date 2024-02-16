@@ -225,6 +225,8 @@ class guiconfigurator:
             writecfg(newcfg)
             self.cfg = newcfg
             self.note.config(text=_("Config saved"), fg='green')
+        else:
+            self.note.config(text=_("Error"), fg='red')
 
     # Update cfg structure with configuration from GUI
     def get_gui_cfg(self):
@@ -321,12 +323,6 @@ class guiconfigurator:
                 newcfg.wmin[i] = self.wmin[i].get()
             else:
                 newcfg.wmin[i] = None
-
-        # Show warning if needed
-        if errorflag == 0:
-            self.note.config(text=_("Config validated"), fg='green')
-        else:
-            self.note.config(text=_("Errors detected"), fg='red')
 
         return errorflag, newcfg
 
