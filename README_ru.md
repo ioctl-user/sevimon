@@ -9,6 +9,8 @@
 
 **[Запуск в докере в Linux](#запуск-в-докере-в-linux)**
 
+**[Запуск в macOS](#Запуск-в-macOS)**
+
 **[Запуск бинарных версий в Windows 10 и более новых](#запуск-бинарных-версий-в-Windows-10-и-более-новых)**
 
 **[Установка и запуск универсальных интерпретирумых версий программ](#установка-и-запуск-универсальных-интерпретирумых-версий-программ)**
@@ -78,6 +80,27 @@ docker run -it --rm --privileged \
     ioctl2/sevimon:latest sevicfg
 xhost -"local:docker@"
 ```
+
+## Запуск в macOS
+Для запуска в macOS должен быть установлен python с пакетом python-tk. Python для macOS с официального сайта уже включает в себя python-tk. Далее приведён один из вариантов установки через пакетный менеджер brew с самого начала. Запускайте эти команды в терминале:
+```shell
+# Скачайте и установите пакетный менеджер brew, выполните рекомендуемые шаги по настройке
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Установите python и python-tk
+brew install python@3.11
+brew install python-tk@3.11
+
+# Установите пакет sevimon
+pip3.11 install sevimon
+
+# Запускайте утилиты из терминала следующим образом
+python3.11 /usr/local/bin/sevimon
+python3.11 /usr/local/bin/sevicfg
+python3.11 /usr/local/bin/sevistat
+```
+
+Для работы программ может потребоваться предоставить доступ терминала к камере и файловой системе для хранения настроек и журнала.
 
 ## Запуск бинарных версий в Windows 10 и более новых
 Подготовлены [бинарные сборки программы](https://github.com/ioctl-user/sevimon/releases/download/v0.1/sevimon_win10_v0.1.zip) со всеми её зависимостями для Windows (x86\_64). Модели автоматически скачиваются при первом запуске.

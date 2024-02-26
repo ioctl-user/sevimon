@@ -9,6 +9,8 @@
 
 **[Running in Docker in Linux](#running-in-docker-in-Linux)**
 
+**[Running in macOS](#Running-in-macOS)**
+
 **[Running binary versions on Windows 10 and later](#running-binary-versions-on-Windows-10-and-later)**
 
 **[Install and run universal interpreted versions of programs](#install-and-run-universal-interpreted-versions-of-programs)**
@@ -78,6 +80,28 @@ docker run -it --rm --privileged \
     ioctl2/sevimon:latest sevicfg
 xhost -"local:docker@"
 ```
+
+## Running in macOS
+To run on macOS, python with the python-tk package must be installed. Python for macOS from the official website already includes the python-tk. The following is one way to install via the brew package manager from the beginning. Run these commands in the terminal:
+:
+```shell
+# Download and install the brew package manager and follow the recommended configuration steps
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install python and python-tk
+brew install python@3.11
+brew install python-tk@3.11
+
+# Install sevimon package
+pip3.11 install sevimon
+
+# Run the utilities from the terminal as follows
+python3.11 /usr/local/bin/sevimon
+python3.11 /usr/local/bin/sevicfg
+python3.11 /usr/local/bin/sevistat
+```
+
+Programs may require you to provide terminal access to the camera and file system to store settings and logs.
 
 ## Running binary versions on Windows 10 and later
 Prepared [binary program builds](https://github.com/ioctl-user/sevimon/releases/download/v0.1/sevimon_win10_v0.1.zip) with all its dependencies for Windows (x86\_64). Models are automatically downloaded the first time you run it.
