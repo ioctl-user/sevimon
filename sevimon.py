@@ -20,12 +20,7 @@ from lib.config import *
 from lib.cam import *
 
 
-MODEL_NAME='enet_b0_8_best_vgaf'
-cfg = readcfg()
-cam = cam_class(cfg)
-
-
-def writestat(i, scores) -> None:
+def writestat(cfg, i, scores) -> None:
     now = datetime.now()
     print(f'{now.strftime("%H:%M:%S")} ', end='')
 
@@ -52,15 +47,15 @@ def writestat(i, scores) -> None:
         fp.close()
 
 
-def warn_actions(i, scores, wws):
+def warn_actions(cfg, i, scores, wws):
     # Check warning state and notify user
     wname = "Face warn"
     ws = False # Warning state flag
     for e in range(len(emotions)):
-        if cfg.wmin[e] and scores[e] < cfg.wmin[e]:
+        if cfg.wmin[e] is not None and scores[e] < cfg.wmin[e]:
             ws = True
             break
-        if cfg.wmax[e] and scores[e] > cfg.wmax[e]:
+        if cfg.wmax[e] is not None and scores[e] > cfg.wmax[e]:
             ws = True
             break
     try:
@@ -102,7 +97,11 @@ def warn_actions(i, scores, wws):
 
     return ws and cfg.showwarn
 
+
 def main() -> None:
+    MODEL_NAME='enet_b0_8_best_vgaf'
+    cfg = readcfg()
+    cam = cam_class(cfg)
     wws = False # Warning windows was shown flag
 
     ret, cap = cam.find_camera()
@@ -137,8 +136,8 @@ def main() -> None:
             emotion, scores = fer.predict_emotions(face_img,logits=True)
             cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (255, 0, 0), 1)
 
-            wws = warn_actions(i, scores, wws)
-            writestat(i, scores)
+            wws = warn_actions(cfg, i, scores, wws)
+            writestat(cfg, i, scores)
 
             i = i + 1
 

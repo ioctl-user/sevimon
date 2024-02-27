@@ -1,4 +1,4 @@
-hsemotion-onnx @ git+https://github.com/HSE-asavchenko/hsemotion-onnx.git
+hsemotion-onnx @ git+https://github.com/av-savchenko/hsemotion-onnx.git
 opencv-python
 configparser
 platformdirs
