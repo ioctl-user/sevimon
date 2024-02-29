@@ -1,4 +1,4 @@
-from lib.locale.init import translation
+from lib.locale import translation
 
 translation["ru"] = {
     # Эмоции

@@ -1,7 +1,7 @@
 import locale
 import sys
 import os
-from lib.locale.init import translation
+from lib.locale import translation
 from lib.locale.ru import *
 
 if sys.platform != 'darwin':
