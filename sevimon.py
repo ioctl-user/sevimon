@@ -122,15 +122,15 @@ def main() -> None:
             return -1
 
         image = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-        bounding_boxes, ign = centerface(image_bgr, cfg.img_h, cfg.img_w, threshold=0.35)
+        bounding_boxes, ign = centerface(image_bgr, image_bgr.shape[0], image_bgr.shape[1], threshold=0.35)
 
         i = 0
         for bbox in bounding_boxes:
             x1, y1, x2, y2 = [round(b) for b in bbox[0:4]]
             if (x1 <= 0): x1 = 0
             if (y1 <= 0): y1 = 0
-            if (x2 >= cfg.img_w): x2 = cfg.img_w - 1
-            if (y2 >= cfg.img_h): y2 = cfg.img_h - 1
+            if (x2 >= image_bgr.shape[1]): x2 = image_bgr.shape[1] - 1
+            if (y2 >= image_bgr.shape[0]): y2 = image_bgr.shape[0] - 1
 
             face_img = image[y1:y2, x1:x2]
             emotion, scores = fer.predict_emotions(face_img,logits=True)
