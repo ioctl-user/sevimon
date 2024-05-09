@@ -71,7 +71,7 @@ def warn_actions(cfg, i, scores, wws):
                 w = 200
 
             wimg = numpy.zeros((h, w, 3), numpy.uint8)
-            wimg = cv2.rectangle(wimg, (0, 0), (w - 1, h - 1), cfg.wcolor, -1)
+            wimg = cv2.rectangle(wimg, (0, 0), (w - 1, h - 1), cfg.wcolor[::-1], -1)
             font = cv2.FONT_HERSHEY_SIMPLEX
             text = "!"
             linew = int(h / 32)

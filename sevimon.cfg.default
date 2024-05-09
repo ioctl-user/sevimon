@@ -16,7 +16,7 @@ writestat = True
 wsize = 96
 wx = 300
 wy = 150
-wcolor = (0, 255, 0) # In BGR format
+wcolor = (0, 255, 0) # In RGB format
 
 # Minimum and maximum emotion score limits to show warning
 # See lib/i18n.py file for related emotions
