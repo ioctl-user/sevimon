@@ -113,6 +113,7 @@ def main() -> None:
     MODEL_NAME='enet_b0_8_best_vgaf'
     cfg = readcfg()
     cam = cam_class(cfg)
+    bestface = 0 # If configured, here is index of the most intresting face
     wws = False # Warning condition was set
     wwact = False # Warning windows was shown flag
     wstime = datetime.now() # Warning condition set time
@@ -137,13 +138,24 @@ def main() -> None:
         image = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
         bounding_boxes, ign = centerface(image_bgr, image_bgr.shape[0], image_bgr.shape[1], threshold=0.35)
 
-        i = 0
-        for bbox in bounding_boxes:
+        if not cfg.allfaces:
+            # Find biggest (i.e. closer to camera) face
+            areas = (bounding_boxes[:, 2] - bounding_boxes[:, 0] + 1) * (bounding_boxes[:, 3] - bounding_boxes[:, 1] + 1)
+            if areas.size != 0:
+                bestface = areas.argmax()
+
+        for i in range(len(bounding_boxes)):
+            bbox = bounding_boxes[i]
             x1, y1, x2, y2 = [round(b) for b in bbox[0:4]]
             if (x1 <= 0): x1 = 0
             if (y1 <= 0): y1 = 0
             if (x2 >= image_bgr.shape[1]): x2 = image_bgr.shape[1] - 1
             if (y2 >= image_bgr.shape[0]): y2 = image_bgr.shape[0] - 1
+
+            # Just draw border around not selected face
+            if not cfg.allfaces and i != bestface:
+                cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (255, 255, 255), 1)
+                continue
 
             face_img = image[y1:y2, x1:x2]
             emotion, scores = fer.predict_emotions(face_img,logits=True)
@@ -151,8 +163,6 @@ def main() -> None:
 
             wws, wwact, wstime = warn_actions(cfg, scores, wws, wwact, wstime)
             writestat(cfg, i, scores)
-
-            i = i + 1
 
         if cfg.showcap:
             # Exit if main window was closed by user

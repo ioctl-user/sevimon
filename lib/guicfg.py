@@ -89,6 +89,11 @@ class guiconfigurator:
                 misctab, text=_("Show camera picture"), variable=self.showcap,
                 onvalue=1, offvalue=0).grid(row=row.inc(), column=0, sticky=W)
 
+        self.allfaces = BooleanVar()
+        Checkbutton(
+                misctab, text=_("Analyze all faces"), variable=self.allfaces,
+                onvalue=1, offvalue=0).grid(row=row.inc(), column=0, sticky=W)
+
         self.writestat = BooleanVar()
         Checkbutton(
                 misctab, text=_("Write stat file"), variable=self.writestat,
@@ -287,6 +292,7 @@ class guiconfigurator:
             errorflag = 1
 
         newcfg.showcap = self.showcap.get()
+        newcfg.allfaces = self.allfaces.get()
         newcfg.writestat = self.writestat.get()
         newcfg.showwarn = self.showwarn.get()
         newcfg.beepwarn = self.beepwarn.get()
@@ -353,6 +359,7 @@ class guiconfigurator:
         self.wdelay.delete(0, END)
         self.wdelay.insert(0, str(self.cfg.wdelay))
         self.showcap.set(1 if self.cfg.showcap else 0)
+        self.allfaces.set(1 if self.cfg.allfaces else 0)
         self.writestat.set(1 if self.cfg.writestat else 0)
         self.showwarn.set(1 if self.cfg.showwarn else 0)
         self.beepwarn.set(1 if self.cfg.beepwarn else 0)

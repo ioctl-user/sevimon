@@ -12,6 +12,8 @@ translation["ru"] = {
     "Surpr." : "Удивл.",
 
     # Всё остальное в алфавитном порядке
+    "Analyze all faces" : "Анализировать все лица",
+    "Beep on warning (depend on system settings)" : "Звуковое предупреждение (зависит от системных настроек)",
     "Can't open camera {}" : "Не удаётся открыть камеру {}",
     "Can't read camera image" : "Не удаётся получить изображение с камеры",
     "Camera number" : "Номер камеры",
@@ -26,7 +28,6 @@ translation["ru"] = {
     "Save" : "Сохранить",
     "Scanning directory {} for statistics" : "Открываю статистику в каталоге {}",
     "Show camera picture" : "Показывать изображение с камеры",
-    "Beep on warning (depend on system settings)" : "Звуковое предупреждение (зависит от системных настроек)",
     "Show warning" : "Показывать предупреждение",
     "Trying to read the config file " : "Пробую прочитать файл настроек ",
     "Video height" : "Высота видео",

@@ -37,6 +37,7 @@ def readcfg() -> configclass:
     cfg.wdelay = section.getint("wdelay", 0)
 
     cfg.showcap = section.getboolean("showcap", True)
+    cfg.allfaces = section.getboolean("allfaces", False)
 
     cfg.writestat = section.getboolean("writestat", True)
 
@@ -73,6 +74,7 @@ def writecfg(cfg) -> None:
         section["fps"] = str(cfg.fps)
         section["wdelay"] = str(cfg.wdelay)
         section["showcap"] = str(cfg.showcap)
+        section["allfaces"] = str(cfg.allfaces)
         section["writestat"] = str(cfg.writestat)
         section["wsize"] = str(cfg.wsize)
         section["wx"] = str(cfg.wx)
