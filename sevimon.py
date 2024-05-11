@@ -9,7 +9,7 @@ os.environ["OPENCV_LOG_LEVEL"]="FATAL" # Suppress OpenCV messages
 
 import cv2
 import numpy
-from datetime import datetime
+from datetime import datetime,timedelta
 import platformdirs
 from hsemotion_onnx.facial_emotions import HSEmotionRecognizer
 
@@ -46,8 +46,9 @@ def writestat(cfg, i, scores) -> None:
         fp.write(str)
         fp.close()
 
-
-def warn_actions(cfg, i, scores, wws):
+#  Parameters:  configuration, scores, warning was set before
+#               waring action was active before, last waring was turned on time
+def warn_actions(cfg, scores, wws, wwact, wstime):
     # Check warning state and notify user
     wname = "Face warn"
     ws = False # Warning state flag
@@ -58,10 +59,20 @@ def warn_actions(cfg, i, scores, wws):
         if cfg.wmax[e] is not None and scores[e] > cfg.wmax[e]:
             ws = True
             break
+
+    if wws is False and ws is True: # If warning state is switched on
+        wstime = datetime.now() # Remember time
+
+    # Set/reset warning action depending on warning state and it's timeout
+    if ws and wstime + timedelta(seconds=cfg.wdelay) <= datetime.now():
+        wact = True
+    else:
+        wact = False
+
     try:
         # Show warning window in case of:
         #     it's warning condition, it's on in cfg, has no warning window yet
-        if ws and cfg.showwarn and not wws:
+        if wact and cfg.showwarn and not wwact:
             # Use OpenCV to avoid excess dependencies
 
             w = cfg.wsize
@@ -86,23 +97,25 @@ def warn_actions(cfg, i, scores, wws):
             cv2.imshow(wname, wimg)
         # Destroy warning window in case of:
         #     it's not to be shown (cfg and condition) and has previous window
-        elif not (cfg.showwarn and ws) and wws:
+        elif not (cfg.showwarn and wact) and wwact:
             cv2.destroyWindow(wname)
 
-        if ws and cfg.beepwarn:
+        if wact and cfg.beepwarn:
             # Generate system beep
             print("\a", end="")
     except Exception as exc:
         print(f'Warning: {exc}')
 
-    return ws and cfg.showwarn
+    return ws, wact, wstime
 
 
 def main() -> None:
     MODEL_NAME='enet_b0_8_best_vgaf'
     cfg = readcfg()
     cam = cam_class(cfg)
-    wws = False # Warning windows was shown flag
+    wws = False # Warning condition was set
+    wwact = False # Warning windows was shown flag
+    wstime = datetime.now() # Warning condition set time
 
     ret, cap = cam.find_camera()
     if ret is False:
@@ -136,7 +149,7 @@ def main() -> None:
             emotion, scores = fer.predict_emotions(face_img,logits=True)
             cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (255, 0, 0), 1)
 
-            wws = warn_actions(cfg, i, scores, wws)
+            wws, wwact, wstime = warn_actions(cfg, scores, wws, wwact, wstime)
             writestat(cfg, i, scores)
 
             i = i + 1

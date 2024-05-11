@@ -34,6 +34,7 @@ def readcfg() -> configclass:
     cfg.img_w = section.getint("img_w", 640)
     cfg.img_h = section.getint("img_h", 480)
     cfg.fps = section.getfloat("fps", 1)
+    cfg.wdelay = section.getint("wdelay", 0)
 
     cfg.showcap = section.getboolean("showcap", True)
 
@@ -70,6 +71,7 @@ def writecfg(cfg) -> None:
         section["img_w"] = str(cfg.img_w)
         section["img_h"] = str(cfg.img_h)
         section["fps"] = str(cfg.fps)
+        section["wdelay"] = str(cfg.wdelay)
         section["showcap"] = str(cfg.showcap)
         section["writestat"] = str(cfg.writestat)
         section["wsize"] = str(cfg.wsize)

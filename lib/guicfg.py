@@ -80,6 +80,10 @@ class guiconfigurator:
         self.fps = Entry(misctab, width=4)
         self.fps.grid(row=row.inc(), column=1, sticky=W)
 
+        Label(misctab, text=_("Warning delay in seconds")).grid(row=row.get(), column=0, sticky=W)
+        self.wdelay = Entry(misctab, width=4)
+        self.wdelay.grid(row=row.inc(), column=1, sticky=W)
+
         self.showcap = BooleanVar()
         Checkbutton(
                 misctab, text=_("Show camera picture"), variable=self.showcap,
@@ -273,6 +277,15 @@ class guiconfigurator:
             self.fps.configure(highlightbackground='red', highlightcolor='red')
             errorflag = 1
 
+        try:
+            newcfg.wdelay = int(self.wdelay.get())
+            self.wdelay.configure(
+                    highlightbackground=self.savedentcolor,
+                    highlightcolor=self.savedentcolor)
+        except Exception as e:
+            self.wdelay.configure(highlightbackground='red', highlightcolor='red')
+            errorflag = 1
+
         newcfg.showcap = self.showcap.get()
         newcfg.writestat = self.writestat.get()
         newcfg.showwarn = self.showwarn.get()
@@ -337,6 +350,8 @@ class guiconfigurator:
         self.img_h.insert(0, str(self.cfg.img_h))
         self.fps.delete(0, END)
         self.fps.insert(0, str(self.cfg.fps))
+        self.wdelay.delete(0, END)
+        self.wdelay.insert(0, str(self.cfg.wdelay))
         self.showcap.set(1 if self.cfg.showcap else 0)
         self.writestat.set(1 if self.cfg.writestat else 0)
         self.showwarn.set(1 if self.cfg.showwarn else 0)

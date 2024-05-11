@@ -32,6 +32,7 @@ translation["ru"] = {
     "Video height" : "Высота видео",
     "Video width" : "Ширина видео",
     "Warning color" : "Цвет предупреждения",
+    "Warning delay in seconds" : "Задержка предупреждения в секундах",
     "Warning window size" : "Размер окна с предупреждением",
     "Warning window X pos" : "Координата X предупреждения",
     "Warning window Y pos" : "Координата Y предупреждения",
