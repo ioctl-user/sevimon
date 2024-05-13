@@ -18,8 +18,8 @@ class cam_class():
         if ret is False:
             print (_("Can't open camera {}").format(self.cfg.camera_dev))
 
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.cfg.img_w)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.cfg.img_h)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.cfg.res[0])
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.cfg.res[1])
         self.cap.set(cv2.CAP_PROP_FPS, self.cfg.fps * 2)  # FPS, multiplication by 2 because of hack to clean buffer
         real_fps = int(self.cap.get(5))  # Get actual FPS from hardware
         self.skip_frames = real_fps / self.cfg.fps - 1  # Is there a better way?

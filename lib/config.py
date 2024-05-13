@@ -31,8 +31,7 @@ def readcfg() -> configclass:
     section = config["common"]
 
     cfg.camera_dev = section.getint("camera_dev", 0)
-    cfg.img_w = section.getint("img_w", 640)
-    cfg.img_h = section.getint("img_h", 480)
+    cfg.res = ast.literal_eval(section.get("res", "[640, 480]"))
     cfg.fps = section.getfloat("fps", 1)
     cfg.wdelay = section.getint("wdelay", 0)
 
@@ -42,8 +41,7 @@ def readcfg() -> configclass:
     cfg.writestat = section.getboolean("writestat", True)
 
     cfg.wsize = section.getint("wsize", 95)
-    cfg.wx = section.getint("wx", 300)
-    cfg.wy = section.getint("wy", 150)
+    cfg.wpos = ast.literal_eval(section.get("wpos", "[300, 150]"))
     cfg.wcolor = ast.literal_eval(section.get("wcolor", "(0, 255, 0)"))
 
     cfg.showwarn = section.getboolean("showwarn", True)
@@ -74,16 +72,14 @@ def writecfg(cfg) -> None:
         config.add_section("common")
         section = config["common"]
         section["camera_dev"] = str(cfg.camera_dev)
-        section["img_w"] = str(cfg.img_w)
-        section["img_h"] = str(cfg.img_h)
+        section["res"] = str(cfg.res)
         section["fps"] = str(cfg.fps)
         section["wdelay"] = str(cfg.wdelay)
         section["showcap"] = str(cfg.showcap)
         section["allfaces"] = str(cfg.allfaces)
         section["writestat"] = str(cfg.writestat)
         section["wsize"] = str(cfg.wsize)
-        section["wx"] = str(cfg.wx)
-        section["wy"] = str(cfg.wy)
+        section["wpos"] = str(cfg.wpos)
         section["wcolor"] = str(cfg.wcolor)
         section["showwarn"] = str(cfg.showwarn)
         section["beepwarn"] = str(cfg.beepwarn)

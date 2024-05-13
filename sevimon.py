@@ -92,7 +92,7 @@ def warn_actions(cfg, scores, wws, wwact, wstime):
             cv2.putText(wimg, "!", (textx, texty), font, 1, (0, 0, 0), linew)
             cv2.namedWindow(wname, cv2.WINDOW_NORMAL | cv2.WINDOW_FREERATIO | cv2.WINDOW_GUI_NORMAL)
             cv2.resizeWindow(wname, w, h)
-            cv2.moveWindow(wname, cfg.wx, cfg.wy)
+            cv2.moveWindow(wname, cfg.wpos[0], cfg.wpos[1])
             cv2.setWindowProperty(wname, cv2.WND_PROP_TOPMOST, 1)
             cv2.imshow(wname, wimg)
         # Destroy warning window in case of:

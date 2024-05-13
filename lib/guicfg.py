@@ -66,15 +66,16 @@ class guiconfigurator:
         # Once remember default Entry background color
         self.savedentcolor = self.camera_dev.cget("highlightbackground")
 
+        self.res = [0, 0]
         Label(misctab, text=_("Video width")).grid(
                 row=row.get(), column=0, sticky=W)
-        self.img_w = Entry(misctab, width=4)
-        self.img_w.grid(row=row.inc(), column=1, sticky=W)
+        self.res[0] = Entry(misctab, width=4)
+        self.res[0].grid(row=row.inc(), column=1, sticky=W)
 
         Label(misctab, text=_("Video height")).grid(
                 row=row.get(), column=0, sticky=W)
-        self.img_h = Entry(misctab, width=4)
-        self.img_h.grid(row=row.inc(), column=1, sticky=W)
+        self.res[1] = Entry(misctab, width=4)
+        self.res[1].grid(row=row.inc(), column=1, sticky=W)
 
         Label(misctab, text=_("FPS")).grid(row=row.get(), column=0, sticky=W)
         self.fps = Entry(misctab, width=4)
@@ -116,15 +117,16 @@ class guiconfigurator:
         self.wsize = Entry(misctab, width=4)
         self.wsize.grid(row=row.inc(), column=1, sticky=W)
 
+        self.wpos = [0, 0]
         Label(misctab, text=_("Warning window X pos")).grid(
                 row=row.get(), column=0, sticky=W)
-        self.wx = Entry(misctab, width=4)
-        self.wx.grid(row=row.inc(), column=1, sticky=W)
+        self.wpos[0] = Entry(misctab, width=4)
+        self.wpos[0].grid(row=row.inc(), column=1, sticky=W)
 
         Label(misctab, text=_("Warning window Y pos")).grid(
                 row=row.get(), column=0, sticky=W)
-        self.wy = Entry(misctab, width=4)
-        self.wy.grid(row=row.inc(), column=1, sticky=W)
+        self.wpos[1] = Entry(misctab, width=4)
+        self.wpos[1].grid(row=row.inc(), column=1, sticky=W)
 
         Button(misctab, text=_("Warning color"), command=self.wcolor).grid(
                 row=row.inc(), column=0)
@@ -201,12 +203,12 @@ class guiconfigurator:
     def endis(self,):
         if (self.showwarn.get() is True):
             self.wsize.configure(state=NORMAL)
-            self.wx.configure(state=NORMAL)
-            self.wy.configure(state=NORMAL)
+            self.wpos[0].configure(state=NORMAL)
+            self.wpos[1].configure(state=NORMAL)
         else:
             self.wsize.configure(state=DISABLED)
-            self.wx.configure(state=DISABLED)
-            self.wy.configure(state=DISABLED)
+            self.wpos[0].configure(state=DISABLED)
+            self.wpos[1].configure(state=DISABLED)
 
         for i, ign in enumerate(self.cfg.wmax):
             if (self.wmaxen[i].get() is True):
@@ -254,22 +256,22 @@ class guiconfigurator:
             errorflag = 1
 
         try:
-            newcfg.img_w = int(self.img_w.get())
-            self.img_w.configure(
+            newcfg.res[0] = int(self.res[0].get())
+            self.res[0].configure(
                     highlightbackground=self.savedentcolor,
                     highlightcolor=self.savedentcolor)
         except Exception as e:
-            self.img_w.configure(
+            self.res[0].configure(
                     highlightbackground='red', highlightcolor='red')
             errorflag = 1
 
         try:
-            newcfg.img_h = int(self.img_h.get())
-            self.img_h.configure(
+            newcfg.res[1] = int(self.res[1].get())
+            self.res[1].configure(
                     highlightbackground=self.savedentcolor,
                     highlightcolor=self.savedentcolor)
         except Exception as e:
-            self.img_h.configure(
+            self.res[1].configure(
                     highlightbackground='red', highlightcolor='red')
             errorflag = 1
 
@@ -308,22 +310,22 @@ class guiconfigurator:
             errorflag = 1
 
         try:
-            newcfg.wx = int(self.wx.get())
-            self.wx.configure(
+            newcfg.wpos[0] = int(self.wpos[0].get())
+            self.wpos[0].configure(
                     highlightbackground=self.savedentcolor,
                     highlightcolor=self.savedentcolor)
         except Exception as e:
-            self.wx.configure(
+            self.wpos[0].configure(
                     highlightbackground='red', highlightcolor='red')
             errorflag = 1
 
         try:
-            newcfg.wy = int(self.wy.get())
-            self.wy.configure(
+            newcfg.wpos[1] = int(self.wpos[1].get())
+            self.wpos[1].configure(
                     highlightbackground=self.savedentcolor,
                     highlightcolor=self.savedentcolor)
         except Exception as e:
-            self.wy.configure(highlightbackground='red', highlightcolor='red')
+            self.wpos[1].configure(highlightbackground='red', highlightcolor='red')
             errorflag = 1
 
         newcfg.wcolor = self.wcolor
@@ -344,10 +346,10 @@ class guiconfigurator:
         # Common settings
         self.camera_dev.delete(0, END)
         self.camera_dev.insert(0, str(self.cfg.camera_dev))
-        self.img_w.delete(0, END)
-        self.img_w.insert(0, str(self.cfg.img_w))
-        self.img_h.delete(0, END)
-        self.img_h.insert(0, str(self.cfg.img_h))
+        self.res[0].delete(0, END)
+        self.res[0].insert(0, str(self.cfg.res[0]))
+        self.res[1].delete(0, END)
+        self.res[1].insert(0, str(self.cfg.res[1]))
         self.fps.delete(0, END)
         self.fps.insert(0, str(self.cfg.fps))
         self.wdelay.delete(0, END)
@@ -359,10 +361,10 @@ class guiconfigurator:
         self.beepwarn.set(1 if self.cfg.beepwarn else 0)
         self.wsize.delete(0, END)
         self.wsize.insert(0, str(self.cfg.wsize))
-        self.wx.delete(0, END)
-        self.wx.insert(0, str(self.cfg.wx))
-        self.wy.delete(0, END)
-        self.wy.insert(0, str(self.cfg.wy))
+        self.wpos[0].delete(0, END)
+        self.wpos[0].insert(0, str(self.cfg.wpos[0]))
+        self.wpos[1].delete(0, END)
+        self.wpos[1].insert(0, str(self.cfg.wpos[1]))
         self.wcolor = self.cfg.wcolor
 
         # Emotion limits
