@@ -53,10 +53,10 @@ def warn_actions(cfg, scores, wws, wwact, wstime):
     wname = "Face warn"
     ws = False # Warning state flag
     for e in range(len(emotions)):
-        if cfg.wmin[e] is not None and scores[e] < cfg.wmin[e]:
+        if cfg.wminen[e] and scores[e] < cfg.wmin[e]:
             ws = True
             break
-        if cfg.wmax[e] is not None and scores[e] > cfg.wmax[e]:
+        if cfg.wmaxen[e] and scores[e] > cfg.wmax[e]:
             ws = True
             break
 

@@ -330,18 +330,12 @@ class guiconfigurator:
 
         # Emotion limits
         for i, ign in enumerate(self.cfg.wmax):
-            val = self.wmaxen[i].get()
-            if val == 1:
-                newcfg.wmax[i] = self.wmax[i].get()
-            else:
-                newcfg.wmax[i] = None
+            newcfg.wmaxen[i] = self.wmaxen[i].get()
+            newcfg.wmax[i] = self.wmax[i].get()
 
         for i, ign in enumerate(self.cfg.wmin):
-            val = self.wminen[i].get()
-            if val == 1:
-                newcfg.wmin[i] = self.wmin[i].get()
-            else:
-                newcfg.wmin[i] = None
+            newcfg.wminen[i] = self.wminen[i].get()
+            newcfg.wmin[i] = self.wmin[i].get()
 
         return errorflag, newcfg
 
@@ -372,21 +366,13 @@ class guiconfigurator:
         self.wcolor = self.cfg.wcolor
 
         # Emotion limits
-        for i, val in enumerate(self.cfg.wmax):
-            if val is not None:
-                self.wmaxen[i].set(1)
-                self.wmax[i].set(val)
-            else:
-                self.wmaxen[i].set(0)
-                self.wmax[i].set(0)
+        for i, val in enumerate(self.cfg.wmaxen):
+            self.wmaxen[i].set(val)
+            self.wmax[i].set(self.cfg.wmax[i])
 
-        for i, val in enumerate(self.cfg.wmin):
-            if val is not None:
-                self.wminen[i].set(1)
-                self.wmin[i].set(val)
-            else:
-                self.wminen[i].set(0)
-                self.wmin[i].set(0)
+        for i, val in enumerate(self.cfg.wminen):
+            self.wminen[i].set(val)
+            self.wmin[i].set(self.cfg.wmin[i])
 
         # Reset note, if it was
         self.note.config(text="")

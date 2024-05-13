@@ -50,9 +50,14 @@ def readcfg() -> configclass:
     cfg.beepwarn = section.getboolean("beepwarn", False)
 
     cfg.wmax = ast.literal_eval(section.get(
-            "wmax", "[ 4.0, None, None, None, None, None, None,  1.5]"))
+            "wmax", "[4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5]"))
     cfg.wmin = ast.literal_eval(section.get(
-            "wmin", "[None, None, None, None, None, None, None, None]"))
+            "wmin", "[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"))
+
+    cfg.wmaxen = ast.literal_eval(section.get(
+            "wmaxen", "[True, False, False, False, False, False, False, True]"))
+    cfg.wminen = ast.literal_eval(section.get(
+            "wminen", "[False, False, False, False, False, False, False, False]"))
 
     if needwritecfg:
         writecfg(cfg)
@@ -84,6 +89,8 @@ def writecfg(cfg) -> None:
         section["beepwarn"] = str(cfg.beepwarn)
         section["wmax"] = str(cfg.wmax)
         section["wmin"] = str(cfg.wmin)
+        section["wmaxen"] = str(cfg.wmaxen)
+        section["wminen"] = str(cfg.wminen)
 
         if not os.path.exists(platformdirs.user_config_dir(ANAME)):
             os.makedirs(platformdirs.user_config_dir(ANAME))
