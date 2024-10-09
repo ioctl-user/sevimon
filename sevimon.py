@@ -118,16 +118,16 @@ def main() -> None:
     wwact = False # Warning windows was shown flag
     wstime = datetime.now() # Warning condition set time
 
+    # Set neural networks
+    centerface = CenterFace()
+    fer = HSEmotionRecognizer(MODEL_NAME)
+
     ret, cap = cam.find_camera()
     if ret is False:
         return -1
 
     # Set main window properties
     cv2.namedWindow('Video', cv2.WINDOW_GUI_NORMAL | cv2.WINDOW_AUTOSIZE)
-
-    # Set neural networks
-    centerface = CenterFace()
-    fer = HSEmotionRecognizer(MODEL_NAME)
 
     while True:
         ret, image_bgr = cam.get_next_frame()
