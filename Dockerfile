@@ -6,11 +6,11 @@ ENV TZ=Europe/Moscow
 
 # Note: language pack is indirectly used for the program localization
 RUN apt update && apt install -qq -y --no-install-recommends \
-	vim git python3-pip libopencv-dev x11-utils net-tools python3-tk \
+	vim git python3-pip libgl1-mesa-glx libglib2.0-0 libice6 libsm6 net-tools python3-tk \
 	language-pack-ru
 
 RUN ln -sf /bin/bash /bin/sh
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 # Install package. Need dry run to download all dependencies
-RUN pip install git+https://github.com/ioctl-user/sevimon.git && sevimon
+RUN pip install git+https://github.com/ioctl-user/sevimon.git && sevimon || echo Done

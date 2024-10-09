@@ -7,13 +7,14 @@ with open('requirements.txt') as f:
 setup(
     name='sevimon',
     version='0.2',
-    license='LICENSE.txt',
+    license='LICENSE',
     packages=[
       "sevimon",
       "sevimon.lib",
       "sevimon.lib.locale",
     ],
     package_dir={'sevimon': '', 'sevimon.lib': 'lib', 'sevimon.lib.locale': 'lib/locale'},
+    package_data={'': ['*.txt', '*.md']},
     entry_points = {
         'console_scripts': [
             'sevicfg=sevimon.sevicfg:main',
