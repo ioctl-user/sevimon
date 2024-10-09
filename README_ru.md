@@ -36,7 +36,7 @@ Sevimon это набор программ с открытым исходным 
 
 Программа sevimon запускается следующим образом:
 ```shell
-mkdir -p ~/.cache/sevimon/log/
+mkdir -p ~/.local/state/sevimon/log/
 mkdir -p ~/.config/sevimon/
 echo > ~/.config/sevimon/sevimon.cfg
 xhost +"local:docker@"
@@ -47,7 +47,7 @@ docker run -it --rm --privileged \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -v $HOME/.config/sevimon/sevimon.cfg:/root/.config/sevimon/sevimon.cfg \
-    -v $HOME/.cache/sevimon/log:/root/.local/state/sevimon/log \
+    -v $HOME/.local/state/sevimon/log:/root/.local/state/sevimon/log \
     -v /dev/video0:/dev/video0 \
     ioctl2/sevimon:latest sevimon
 xhost -"local:docker@"
@@ -62,7 +62,7 @@ docker run -it --rm --privileged \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -v $HOME/.config/sevimon/sevimon.cfg:/root/.config/sevimon/sevimon.cfg \
-    -v $HOME/.cache/sevimon/log:/root/.local/state/sevimon/log \
+    -v $HOME/.local/state/sevimon/log:/root/.local/state/sevimon/log \
     ioctl2/sevimon:latest sevistat
 xhost -"local:docker@"
 ```
@@ -76,7 +76,7 @@ docker run -it --rm --privileged \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -v $HOME/.config/sevimon/sevimon.cfg:/root/.config/sevimon/sevimon.cfg \
-    -v $HOME/.cache/sevimon/log:/root/.local/state/sevimon/log \
+    -v $HOME/.local/state/sevimon/log:/root/.local/state/sevimon/log \
     ioctl2/sevimon:latest sevicfg
 xhost -"local:docker@"
 ```
@@ -88,22 +88,23 @@ xhost -"local:docker@"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Установите python и python-tk
-brew install python@3.11
-brew install python-tk@3.11
+brew install python@3.12
+brew install python-tk@3.12
 
 # Установите пакет sevimon
-pip3.11 install sevimon
+pip3.12 install sevimon --break-system-packages
 
 # Запускайте утилиты из терминала следующим образом
-python3.11 /usr/local/bin/sevimon
-python3.11 /usr/local/bin/sevicfg
-python3.11 /usr/local/bin/sevistat
+# При необходимости разрешите доступ к камере
+/usr/local/bin/sevimon
+/usr/local/bin/sevicfg
+/usr/local/bin/sevistat
 ```
 
 Для работы программ может потребоваться предоставить доступ терминала к камере и файловой системе для хранения настроек и журнала.
 
 ## Запуск бинарных версий в Windows 10 и более новых
-Подготовлены [бинарные сборки программы](https://github.com/ioctl-user/sevimon/releases/download/v0.1/sevimon_win10_v0.1.zip) со всеми её зависимостями для Windows (x86\_64). Модели автоматически скачиваются при первом запуске.
+Подготовлены [бинарные сборки программы](https://github.com/ioctl-user/sevimon/releases/download/v0.2/sevimon_win10_v0.2.zip) со всеми её зависимостями для Windows (x86\_64). Модели автоматически скачиваются при первом запуске.
 
 ## Установка и запуск универсальных интерпретирумых версий программ
 ### Подготовительные действия для Linux/UNIX
