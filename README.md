@@ -136,5 +136,5 @@ AGPL v3 or newer.
 
 ## Acknowledgements
 
-The [Centerface] project (https://github.com/Star-Clouds/CenterFace/blob/master/prj-python/) is used to search for faces in an image.
-The [HSEmotion] project (https://github.com/HSE-asavchenko/face-emotion-recognition) is used for emotion detection.
+The [Centerface](https://github.com/Star-Clouds/CenterFace/blob/master/prj-python/) project is used to search for faces in an image.
+The [HSEmotion](https://github.com/HSE-asavchenko/face-emotion-recognition) project is used for emotion detection.
